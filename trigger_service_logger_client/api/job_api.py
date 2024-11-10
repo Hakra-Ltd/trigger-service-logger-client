@@ -602,7 +602,7 @@ class JobApi:
 
 
     @validate_call
-    async def get_jobs_v1_job_get(
+    async def get_job_v1_job_get(
         self,
         limit: Optional[Annotated[int, Field(strict=True, ge=1)]] = None,
         _request_timeout: Union[
@@ -618,7 +618,7 @@ class JobApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RunJobResponseSchema:
-        """Get Jobs
+        """Get Job
 
 
         :param limit:
@@ -645,7 +645,7 @@ class JobApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_jobs_v1_job_get_serialize(
+        _param = self._get_job_v1_job_get_serialize(
             limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -669,7 +669,7 @@ class JobApi:
 
 
     @validate_call
-    async def get_jobs_v1_job_get_with_http_info(
+    async def get_job_v1_job_get_with_http_info(
         self,
         limit: Optional[Annotated[int, Field(strict=True, ge=1)]] = None,
         _request_timeout: Union[
@@ -685,7 +685,7 @@ class JobApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[RunJobResponseSchema]:
-        """Get Jobs
+        """Get Job
 
 
         :param limit:
@@ -712,7 +712,7 @@ class JobApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_jobs_v1_job_get_serialize(
+        _param = self._get_job_v1_job_get_serialize(
             limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -736,7 +736,7 @@ class JobApi:
 
 
     @validate_call
-    async def get_jobs_v1_job_get_without_preload_content(
+    async def get_job_v1_job_get_without_preload_content(
         self,
         limit: Optional[Annotated[int, Field(strict=True, ge=1)]] = None,
         _request_timeout: Union[
@@ -752,7 +752,7 @@ class JobApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Jobs
+        """Get Job
 
 
         :param limit:
@@ -779,7 +779,7 @@ class JobApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_jobs_v1_job_get_serialize(
+        _param = self._get_job_v1_job_get_serialize(
             limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -798,7 +798,7 @@ class JobApi:
         return response_data.response
 
 
-    def _get_jobs_v1_job_get_serialize(
+    def _get_job_v1_job_get_serialize(
         self,
         limit,
         _request_auth,
