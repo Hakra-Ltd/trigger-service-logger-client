@@ -17,21 +17,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from trigger_service_logger_client.models.scrap_type import ScrapType
 from typing import Optional, Set
 from typing_extensions import Self
 
-class RunJobInfo(BaseModel):
+class JobRunMessage(BaseModel):
     """
-    RunJobInfo
+    JobRunMessage
     """ # noqa: E501
     job_run_id: StrictStr
     event_id: StrictStr
     scrap_type: ScrapType
-    run_config: Optional[Dict[str, Any]]
-    __properties: ClassVar[List[str]] = ["job_run_id", "event_id", "scrap_type", "run_config"]
+    run_config: Optional[Dict[str, Any]] = None
+    reporting: Optional[StrictBool] = None
+    __properties: ClassVar[List[str]] = ["job_run_id", "event_id", "scrap_type", "run_config", "reporting"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +52,7 @@ class RunJobInfo(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of RunJobInfo from a JSON string"""
+        """Create an instance of JobRunMessage from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -77,11 +78,16 @@ class RunJobInfo(BaseModel):
         if self.run_config is None and "run_config" in self.model_fields_set:
             _dict['run_config'] = None
 
+        # set to None if reporting (nullable) is None
+        # and model_fields_set contains the field
+        if self.reporting is None and "reporting" in self.model_fields_set:
+            _dict['reporting'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of RunJobInfo from a dict"""
+        """Create an instance of JobRunMessage from a dict"""
         if obj is None:
             return None
 
@@ -92,7 +98,8 @@ class RunJobInfo(BaseModel):
             "job_run_id": obj.get("job_run_id"),
             "event_id": obj.get("event_id"),
             "scrap_type": obj.get("scrap_type"),
-            "run_config": obj.get("run_config")
+            "run_config": obj.get("run_config"),
+            "reporting": obj.get("reporting")
         })
         return _obj
 

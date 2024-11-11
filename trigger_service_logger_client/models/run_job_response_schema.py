@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from trigger_service_logger_client.models.run_job_info import RunJobInfo
+from trigger_service_logger_client.models.job_run_message import JobRunMessage
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +27,7 @@ class RunJobResponseSchema(BaseModel):
     """
     RunJobResponseSchema
     """ # noqa: E501
-    jobs: List[RunJobInfo]
+    jobs: List[JobRunMessage]
     __properties: ClassVar[List[str]] = ["jobs"]
 
     model_config = ConfigDict(
@@ -88,7 +88,7 @@ class RunJobResponseSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "jobs": [RunJobInfo.from_dict(_item) for _item in obj["jobs"]] if obj.get("jobs") is not None else None
+            "jobs": [JobRunMessage.from_dict(_item) for _item in obj["jobs"]] if obj.get("jobs") is not None else None
         })
         return _obj
 
