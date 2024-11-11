@@ -18,7 +18,8 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
+from trigger_service_logger_client.models.scrap_type import ScrapType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,8 +29,8 @@ class RunJobInfo(BaseModel):
     """ # noqa: E501
     job_run_id: StrictStr
     event_id: StrictStr
-    scrap_type: StrictStr
-    run_config: Dict[str, Any]
+    scrap_type: ScrapType
+    run_config: Optional[Dict[str, Any]]
     __properties: ClassVar[List[str]] = ["job_run_id", "event_id", "scrap_type", "run_config"]
 
     model_config = ConfigDict(
@@ -71,6 +72,11 @@ class RunJobInfo(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if run_config (nullable) is None
+        # and model_fields_set contains the field
+        if self.run_config is None and "run_config" in self.model_fields_set:
+            _dict['run_config'] = None
+
         return _dict
 
     @classmethod
