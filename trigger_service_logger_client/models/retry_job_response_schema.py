@@ -17,8 +17,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictBool
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,8 +27,9 @@ class RetryJobResponseSchema(BaseModel):
     """
     RetryJobResponseSchema
     """ # noqa: E501
-    retry: StrictBool
-    __properties: ClassVar[List[str]] = ["retry"]
+    retry: StrictBool = Field(description="True if the job should be retried")
+    delay: Optional[Annotated[int, Field(strict=True, ge=0)]] = None
+    __properties: ClassVar[List[str]] = ["retry", "delay"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -68,6 +70,11 @@ class RetryJobResponseSchema(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if delay (nullable) is None
+        # and model_fields_set contains the field
+        if self.delay is None and "delay" in self.model_fields_set:
+            _dict['delay'] = None
+
         return _dict
 
     @classmethod
@@ -80,7 +87,8 @@ class RetryJobResponseSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "retry": obj.get("retry")
+            "retry": obj.get("retry"),
+            "delay": obj.get("delay")
         })
         return _obj
 
