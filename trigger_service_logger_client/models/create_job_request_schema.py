@@ -17,9 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from trigger_service_logger_client.models.scrap_type import ScrapType
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,9 +30,8 @@ class CreateJobRequestSchema(BaseModel):
     event_id: StrictStr
     job_type: Optional[ScrapType] = None
     run_config: Optional[Dict[str, Any]] = None
-    plan_frequency: Optional[Annotated[int, Field(strict=True, ge=0)]] = None
     urgent: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["event_id", "job_type", "run_config", "plan_frequency", "urgent"]
+    __properties: ClassVar[List[str]] = ["event_id", "job_type", "run_config", "urgent"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -79,11 +77,6 @@ class CreateJobRequestSchema(BaseModel):
         if self.run_config is None and "run_config" in self.model_fields_set:
             _dict['run_config'] = None
 
-        # set to None if plan_frequency (nullable) is None
-        # and model_fields_set contains the field
-        if self.plan_frequency is None and "plan_frequency" in self.model_fields_set:
-            _dict['plan_frequency'] = None
-
         # set to None if urgent (nullable) is None
         # and model_fields_set contains the field
         if self.urgent is None and "urgent" in self.model_fields_set:
@@ -104,7 +97,6 @@ class CreateJobRequestSchema(BaseModel):
             "event_id": obj.get("event_id"),
             "job_type": obj.get("job_type"),
             "run_config": obj.get("run_config"),
-            "plan_frequency": obj.get("plan_frequency"),
             "urgent": obj.get("urgent")
         })
         return _obj
