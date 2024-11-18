@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictBool
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -32,7 +32,8 @@ class FinishJobRequestSchema(BaseModel):
     started: datetime
     finished: datetime
     success: StrictBool
-    __properties: ClassVar[List[str]] = ["process_notes", "scrap_notes", "started", "finished", "success"]
+    error_reason: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["process_notes", "scrap_notes", "started", "finished", "success", "error_reason"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -83,6 +84,11 @@ class FinishJobRequestSchema(BaseModel):
         if self.scrap_notes is None and "scrap_notes" in self.model_fields_set:
             _dict['scrap_notes'] = None
 
+        # set to None if error_reason (nullable) is None
+        # and model_fields_set contains the field
+        if self.error_reason is None and "error_reason" in self.model_fields_set:
+            _dict['error_reason'] = None
+
         return _dict
 
     @classmethod
@@ -99,7 +105,8 @@ class FinishJobRequestSchema(BaseModel):
             "scrap_notes": obj.get("scrap_notes"),
             "started": obj.get("started"),
             "finished": obj.get("finished"),
-            "success": obj.get("success")
+            "success": obj.get("success"),
+            "error_reason": obj.get("error_reason")
         })
         return _obj
 
