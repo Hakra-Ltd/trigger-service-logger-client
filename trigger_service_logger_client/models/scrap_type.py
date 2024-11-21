@@ -26,10 +26,10 @@ class ScrapType(str, Enum):
     """
     allowed enum values
     """
-    TICKETMASTER_MAP = 'ticketmaster_map'
-    TICKETMASTER_FACETS = 'ticketmaster_facets'
+    TICKETMASTER_MINUS_MAP = 'ticketmaster-map'
+    TICKETMASTER_MINUS_FACET = 'ticketmaster-facet'
     VIVIDSEATS = 'vividseats'
-    EVENUE = 'evenue'
+    EVENUE_MINUS_SEAT = 'evenue-seat'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
