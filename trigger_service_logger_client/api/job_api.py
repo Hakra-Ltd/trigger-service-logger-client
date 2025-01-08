@@ -1678,7 +1678,7 @@ class JobApi:
 
 
     @validate_call
-    async def set_event_data_process_by_event_id_v1_job_job_id_data_process_notes_patch(
+    async def set_job_data_process_notes_v1_job_job_id_data_process_notes_patch(
         self,
         job_id: StrictStr,
         body: Dict[str, Any],
@@ -1695,7 +1695,7 @@ class JobApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> BaseResponseSchema:
-        """Set Event Data Process By Event Id
+        """Set Job Data Process Notes
 
         Set job data process notes by event id
 
@@ -1725,7 +1725,7 @@ class JobApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._set_event_data_process_by_event_id_v1_job_job_id_data_process_notes_patch_serialize(
+        _param = self._set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
             job_id=job_id,
             body=body,
             _request_auth=_request_auth,
@@ -1750,7 +1750,7 @@ class JobApi:
 
 
     @validate_call
-    async def set_event_data_process_by_event_id_v1_job_job_id_data_process_notes_patch_with_http_info(
+    async def set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_with_http_info(
         self,
         job_id: StrictStr,
         body: Dict[str, Any],
@@ -1767,7 +1767,7 @@ class JobApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[BaseResponseSchema]:
-        """Set Event Data Process By Event Id
+        """Set Job Data Process Notes
 
         Set job data process notes by event id
 
@@ -1797,7 +1797,7 @@ class JobApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._set_event_data_process_by_event_id_v1_job_job_id_data_process_notes_patch_serialize(
+        _param = self._set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
             job_id=job_id,
             body=body,
             _request_auth=_request_auth,
@@ -1822,7 +1822,7 @@ class JobApi:
 
 
     @validate_call
-    async def set_event_data_process_by_event_id_v1_job_job_id_data_process_notes_patch_without_preload_content(
+    async def set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_without_preload_content(
         self,
         job_id: StrictStr,
         body: Dict[str, Any],
@@ -1839,7 +1839,7 @@ class JobApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Set Event Data Process By Event Id
+        """Set Job Data Process Notes
 
         Set job data process notes by event id
 
@@ -1869,7 +1869,7 @@ class JobApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._set_event_data_process_by_event_id_v1_job_job_id_data_process_notes_patch_serialize(
+        _param = self._set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
             job_id=job_id,
             body=body,
             _request_auth=_request_auth,
@@ -1889,7 +1889,7 @@ class JobApi:
         return response_data.response
 
 
-    def _set_event_data_process_by_event_id_v1_job_job_id_data_process_notes_patch_serialize(
+    def _set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
         self,
         job_id,
         body,
