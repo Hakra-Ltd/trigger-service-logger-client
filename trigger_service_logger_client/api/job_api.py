@@ -1134,7 +1134,7 @@ class JobApi:
 
 
     @validate_call
-    async def move_log_to_history_v1_job_job_id_movel_log_to_history_patch(
+    async def move_log_to_history_v1_job_job_id_move_log_to_history_patch(
         self,
         job_id: StrictStr,
         _request_timeout: Union[
@@ -1177,7 +1177,7 @@ class JobApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._move_log_to_history_v1_job_job_id_movel_log_to_history_patch_serialize(
+        _param = self._move_log_to_history_v1_job_job_id_move_log_to_history_patch_serialize(
             job_id=job_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1201,7 +1201,7 @@ class JobApi:
 
 
     @validate_call
-    async def move_log_to_history_v1_job_job_id_movel_log_to_history_patch_with_http_info(
+    async def move_log_to_history_v1_job_job_id_move_log_to_history_patch_with_http_info(
         self,
         job_id: StrictStr,
         _request_timeout: Union[
@@ -1244,7 +1244,7 @@ class JobApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._move_log_to_history_v1_job_job_id_movel_log_to_history_patch_serialize(
+        _param = self._move_log_to_history_v1_job_job_id_move_log_to_history_patch_serialize(
             job_id=job_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1268,7 +1268,7 @@ class JobApi:
 
 
     @validate_call
-    async def move_log_to_history_v1_job_job_id_movel_log_to_history_patch_without_preload_content(
+    async def move_log_to_history_v1_job_job_id_move_log_to_history_patch_without_preload_content(
         self,
         job_id: StrictStr,
         _request_timeout: Union[
@@ -1311,7 +1311,7 @@ class JobApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._move_log_to_history_v1_job_job_id_movel_log_to_history_patch_serialize(
+        _param = self._move_log_to_history_v1_job_job_id_move_log_to_history_patch_serialize(
             job_id=job_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1330,7 +1330,7 @@ class JobApi:
         return response_data.response
 
 
-    def _move_log_to_history_v1_job_job_id_movel_log_to_history_patch_serialize(
+    def _move_log_to_history_v1_job_job_id_move_log_to_history_patch_serialize(
         self,
         job_id,
         _request_auth,
@@ -1375,7 +1375,7 @@ class JobApi:
 
         return self.api_client.param_serialize(
             method='PATCH',
-            resource_path='/v1/job/{job_id}/movel-log-to-history',
+            resource_path='/v1/job/{job_id}/move-log-to-history',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
