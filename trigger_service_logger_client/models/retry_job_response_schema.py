@@ -29,7 +29,8 @@ class RetryJobResponseSchema(BaseModel):
     """ # noqa: E501
     retry: StrictBool = Field(description="True if the job should be retried")
     delay: Optional[Annotated[int, Field(strict=True, ge=0)]] = None
-    __properties: ClassVar[List[str]] = ["retry", "delay"]
+    run_config: Optional[Dict[str, Any]] = None
+    __properties: ClassVar[List[str]] = ["retry", "delay", "run_config"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -75,6 +76,11 @@ class RetryJobResponseSchema(BaseModel):
         if self.delay is None and "delay" in self.model_fields_set:
             _dict['delay'] = None
 
+        # set to None if run_config (nullable) is None
+        # and model_fields_set contains the field
+        if self.run_config is None and "run_config" in self.model_fields_set:
+            _dict['run_config'] = None
+
         return _dict
 
     @classmethod
@@ -88,7 +94,8 @@ class RetryJobResponseSchema(BaseModel):
 
         _obj = cls.model_validate({
             "retry": obj.get("retry"),
-            "delay": obj.get("delay")
+            "delay": obj.get("delay"),
+            "run_config": obj.get("run_config")
         })
         return _obj
 
