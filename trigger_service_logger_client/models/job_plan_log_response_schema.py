@@ -18,22 +18,28 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class FinishJobRequestSchema(BaseModel):
+class JobPlanLogResponseSchema(BaseModel):
     """
-    FinishJobRequestSchema
+    JobPlanLogResponseSchema
     """ # noqa: E501
+    run_id: StrictStr
+    job_id: StrictInt
+    initiated: datetime
+    started: Optional[datetime] = None
+    finished: Optional[datetime] = None
+    success: Optional[StrictBool] = None
+    urgent: Optional[StrictBool] = None
     process_notes: Optional[Dict[str, Any]] = None
     scrap_notes: Optional[Dict[str, Any]] = None
-    started: datetime
-    finished: datetime
-    success: StrictBool
+    retry: Optional[StrictInt] = None
     error_reason: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["process_notes", "scrap_notes", "started", "finished", "success", "error_reason"]
+    data_process_notes: Optional[Dict[str, Any]] = None
+    __properties: ClassVar[List[str]] = ["run_id", "job_id", "initiated", "started", "finished", "success", "urgent", "process_notes", "scrap_notes", "retry", "error_reason", "data_process_notes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +59,7 @@ class FinishJobRequestSchema(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FinishJobRequestSchema from a JSON string"""
+        """Create an instance of JobPlanLogResponseSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,6 +80,26 @@ class FinishJobRequestSchema(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if started (nullable) is None
+        # and model_fields_set contains the field
+        if self.started is None and "started" in self.model_fields_set:
+            _dict['started'] = None
+
+        # set to None if finished (nullable) is None
+        # and model_fields_set contains the field
+        if self.finished is None and "finished" in self.model_fields_set:
+            _dict['finished'] = None
+
+        # set to None if success (nullable) is None
+        # and model_fields_set contains the field
+        if self.success is None and "success" in self.model_fields_set:
+            _dict['success'] = None
+
+        # set to None if urgent (nullable) is None
+        # and model_fields_set contains the field
+        if self.urgent is None and "urgent" in self.model_fields_set:
+            _dict['urgent'] = None
+
         # set to None if process_notes (nullable) is None
         # and model_fields_set contains the field
         if self.process_notes is None and "process_notes" in self.model_fields_set:
@@ -84,16 +110,26 @@ class FinishJobRequestSchema(BaseModel):
         if self.scrap_notes is None and "scrap_notes" in self.model_fields_set:
             _dict['scrap_notes'] = None
 
+        # set to None if retry (nullable) is None
+        # and model_fields_set contains the field
+        if self.retry is None and "retry" in self.model_fields_set:
+            _dict['retry'] = None
+
         # set to None if error_reason (nullable) is None
         # and model_fields_set contains the field
         if self.error_reason is None and "error_reason" in self.model_fields_set:
             _dict['error_reason'] = None
 
+        # set to None if data_process_notes (nullable) is None
+        # and model_fields_set contains the field
+        if self.data_process_notes is None and "data_process_notes" in self.model_fields_set:
+            _dict['data_process_notes'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FinishJobRequestSchema from a dict"""
+        """Create an instance of JobPlanLogResponseSchema from a dict"""
         if obj is None:
             return None
 
@@ -101,12 +137,18 @@ class FinishJobRequestSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "process_notes": obj.get("process_notes"),
-            "scrap_notes": obj.get("scrap_notes"),
+            "run_id": obj.get("run_id"),
+            "job_id": obj.get("job_id"),
+            "initiated": obj.get("initiated"),
             "started": obj.get("started"),
             "finished": obj.get("finished"),
             "success": obj.get("success"),
-            "error_reason": obj.get("error_reason")
+            "urgent": obj.get("urgent"),
+            "process_notes": obj.get("process_notes"),
+            "scrap_notes": obj.get("scrap_notes"),
+            "retry": obj.get("retry"),
+            "error_reason": obj.get("error_reason"),
+            "data_process_notes": obj.get("data_process_notes")
         })
         return _obj
 
