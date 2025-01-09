@@ -23,17 +23,17 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class FinishJobRequestSchema(BaseModel):
+class FinishScraperJobRequestSchema(BaseModel):
     """
-    FinishJobRequestSchema
+    FinishScraperJobRequestSchema
     """ # noqa: E501
-    process_notes: Optional[Dict[str, Any]] = None
-    scrap_notes: Optional[Dict[str, Any]] = None
     started: datetime
     finished: datetime
     success: StrictBool
+    process_notes: Optional[Dict[str, Any]] = None
     error_reason: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["process_notes", "scrap_notes", "started", "finished", "success", "error_reason"]
+    scrap_notes: Optional[Dict[str, Any]] = None
+    __properties: ClassVar[List[str]] = ["started", "finished", "success", "process_notes", "error_reason", "scrap_notes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +53,7 @@ class FinishJobRequestSchema(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FinishJobRequestSchema from a JSON string"""
+        """Create an instance of FinishScraperJobRequestSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,21 +79,21 @@ class FinishJobRequestSchema(BaseModel):
         if self.process_notes is None and "process_notes" in self.model_fields_set:
             _dict['process_notes'] = None
 
-        # set to None if scrap_notes (nullable) is None
-        # and model_fields_set contains the field
-        if self.scrap_notes is None and "scrap_notes" in self.model_fields_set:
-            _dict['scrap_notes'] = None
-
         # set to None if error_reason (nullable) is None
         # and model_fields_set contains the field
         if self.error_reason is None and "error_reason" in self.model_fields_set:
             _dict['error_reason'] = None
 
+        # set to None if scrap_notes (nullable) is None
+        # and model_fields_set contains the field
+        if self.scrap_notes is None and "scrap_notes" in self.model_fields_set:
+            _dict['scrap_notes'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FinishJobRequestSchema from a dict"""
+        """Create an instance of FinishScraperJobRequestSchema from a dict"""
         if obj is None:
             return None
 
@@ -101,12 +101,12 @@ class FinishJobRequestSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "process_notes": obj.get("process_notes"),
-            "scrap_notes": obj.get("scrap_notes"),
             "started": obj.get("started"),
             "finished": obj.get("finished"),
             "success": obj.get("success"),
-            "error_reason": obj.get("error_reason")
+            "process_notes": obj.get("process_notes"),
+            "error_reason": obj.get("error_reason"),
+            "scrap_notes": obj.get("scrap_notes")
         })
         return _obj
 

@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from trigger_service_logger_client.models.failure_reason import FailureReason
 from typing import Optional, Set
@@ -28,11 +28,13 @@ class RetryJobRequestSchema(BaseModel):
     """
     RetryJobRequestSchema
     """ # noqa: E501
-    process_notes: Optional[Dict[str, Any]] = None
-    scrap_notes: Optional[Dict[str, Any]] = None
     started: datetime
+    finished: datetime
+    success: StrictBool
+    process_notes: Optional[Dict[str, Any]] = None
+    error_reason: Optional[StrictStr] = None
     failure_reason: FailureReason
-    __properties: ClassVar[List[str]] = ["process_notes", "scrap_notes", "started", "failure_reason"]
+    __properties: ClassVar[List[str]] = ["started", "finished", "success", "process_notes", "error_reason", "failure_reason"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,10 +80,10 @@ class RetryJobRequestSchema(BaseModel):
         if self.process_notes is None and "process_notes" in self.model_fields_set:
             _dict['process_notes'] = None
 
-        # set to None if scrap_notes (nullable) is None
+        # set to None if error_reason (nullable) is None
         # and model_fields_set contains the field
-        if self.scrap_notes is None and "scrap_notes" in self.model_fields_set:
-            _dict['scrap_notes'] = None
+        if self.error_reason is None and "error_reason" in self.model_fields_set:
+            _dict['error_reason'] = None
 
         return _dict
 
@@ -95,9 +97,11 @@ class RetryJobRequestSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "process_notes": obj.get("process_notes"),
-            "scrap_notes": obj.get("scrap_notes"),
             "started": obj.get("started"),
+            "finished": obj.get("finished"),
+            "success": obj.get("success"),
+            "process_notes": obj.get("process_notes"),
+            "error_reason": obj.get("error_reason"),
             "failure_reason": obj.get("failure_reason")
         })
         return _obj
