@@ -21,6 +21,8 @@ from typing import Any, Dict, List, Optional
 from typing_extensions import Annotated
 from trigger_service_logger_client.models.base_response_schema import BaseResponseSchema
 from trigger_service_logger_client.models.create_job_request_schema import CreateJobRequestSchema
+from trigger_service_logger_client.models.finish_data_process_job_request_schema import FinishDataProcessJobRequestSchema
+from trigger_service_logger_client.models.finish_job_request_schema import FinishJobRequestSchema
 from trigger_service_logger_client.models.finish_scraper_job_request_schema import FinishScraperJobRequestSchema
 from trigger_service_logger_client.models.job_plan_log_response_schema import JobPlanLogResponseSchema
 from trigger_service_logger_client.models.retry_job_request_schema import RetryJobRequestSchema
@@ -592,7 +594,7 @@ class JobApi:
     async def finish_data_process_job_v1_job_job_id_finish_data_process_post(
         self,
         job_id: StrictStr,
-        finish_scraper_job_request_schema: FinishScraperJobRequestSchema,
+        finish_data_process_job_request_schema: FinishDataProcessJobRequestSchema,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -611,8 +613,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param finish_scraper_job_request_schema: (required)
-        :type finish_scraper_job_request_schema: FinishScraperJobRequestSchema
+        :param finish_data_process_job_request_schema: (required)
+        :type finish_data_process_job_request_schema: FinishDataProcessJobRequestSchema
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -637,7 +639,7 @@ class JobApi:
 
         _param = self._finish_data_process_job_v1_job_job_id_finish_data_process_post_serialize(
             job_id=job_id,
-            finish_scraper_job_request_schema=finish_scraper_job_request_schema,
+            finish_data_process_job_request_schema=finish_data_process_job_request_schema,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -663,7 +665,7 @@ class JobApi:
     async def finish_data_process_job_v1_job_job_id_finish_data_process_post_with_http_info(
         self,
         job_id: StrictStr,
-        finish_scraper_job_request_schema: FinishScraperJobRequestSchema,
+        finish_data_process_job_request_schema: FinishDataProcessJobRequestSchema,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -682,8 +684,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param finish_scraper_job_request_schema: (required)
-        :type finish_scraper_job_request_schema: FinishScraperJobRequestSchema
+        :param finish_data_process_job_request_schema: (required)
+        :type finish_data_process_job_request_schema: FinishDataProcessJobRequestSchema
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -708,7 +710,7 @@ class JobApi:
 
         _param = self._finish_data_process_job_v1_job_job_id_finish_data_process_post_serialize(
             job_id=job_id,
-            finish_scraper_job_request_schema=finish_scraper_job_request_schema,
+            finish_data_process_job_request_schema=finish_data_process_job_request_schema,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -734,7 +736,7 @@ class JobApi:
     async def finish_data_process_job_v1_job_job_id_finish_data_process_post_without_preload_content(
         self,
         job_id: StrictStr,
-        finish_scraper_job_request_schema: FinishScraperJobRequestSchema,
+        finish_data_process_job_request_schema: FinishDataProcessJobRequestSchema,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -753,8 +755,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param finish_scraper_job_request_schema: (required)
-        :type finish_scraper_job_request_schema: FinishScraperJobRequestSchema
+        :param finish_data_process_job_request_schema: (required)
+        :type finish_data_process_job_request_schema: FinishDataProcessJobRequestSchema
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -779,7 +781,7 @@ class JobApi:
 
         _param = self._finish_data_process_job_v1_job_job_id_finish_data_process_post_serialize(
             job_id=job_id,
-            finish_scraper_job_request_schema=finish_scraper_job_request_schema,
+            finish_data_process_job_request_schema=finish_data_process_job_request_schema,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -800,7 +802,7 @@ class JobApi:
     def _finish_data_process_job_v1_job_job_id_finish_data_process_post_serialize(
         self,
         job_id,
-        finish_scraper_job_request_schema,
+        finish_data_process_job_request_schema,
         _request_auth,
         _content_type,
         _headers,
@@ -826,8 +828,8 @@ class JobApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if finish_scraper_job_request_schema is not None:
-            _body_params = finish_scraper_job_request_schema
+        if finish_data_process_job_request_schema is not None:
+            _body_params = finish_data_process_job_request_schema
 
 
         # set the HTTP header `Accept`
@@ -878,7 +880,7 @@ class JobApi:
     async def finish_job_v1_job_job_id_finish_post(
         self,
         job_id: StrictStr,
-        finish_scraper_job_request_schema: FinishScraperJobRequestSchema,
+        finish_job_request_schema: FinishJobRequestSchema,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -897,8 +899,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param finish_scraper_job_request_schema: (required)
-        :type finish_scraper_job_request_schema: FinishScraperJobRequestSchema
+        :param finish_job_request_schema: (required)
+        :type finish_job_request_schema: FinishJobRequestSchema
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -923,7 +925,7 @@ class JobApi:
 
         _param = self._finish_job_v1_job_job_id_finish_post_serialize(
             job_id=job_id,
-            finish_scraper_job_request_schema=finish_scraper_job_request_schema,
+            finish_job_request_schema=finish_job_request_schema,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -949,7 +951,7 @@ class JobApi:
     async def finish_job_v1_job_job_id_finish_post_with_http_info(
         self,
         job_id: StrictStr,
-        finish_scraper_job_request_schema: FinishScraperJobRequestSchema,
+        finish_job_request_schema: FinishJobRequestSchema,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -968,8 +970,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param finish_scraper_job_request_schema: (required)
-        :type finish_scraper_job_request_schema: FinishScraperJobRequestSchema
+        :param finish_job_request_schema: (required)
+        :type finish_job_request_schema: FinishJobRequestSchema
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -994,7 +996,7 @@ class JobApi:
 
         _param = self._finish_job_v1_job_job_id_finish_post_serialize(
             job_id=job_id,
-            finish_scraper_job_request_schema=finish_scraper_job_request_schema,
+            finish_job_request_schema=finish_job_request_schema,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1020,7 +1022,7 @@ class JobApi:
     async def finish_job_v1_job_job_id_finish_post_without_preload_content(
         self,
         job_id: StrictStr,
-        finish_scraper_job_request_schema: FinishScraperJobRequestSchema,
+        finish_job_request_schema: FinishJobRequestSchema,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1039,8 +1041,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param finish_scraper_job_request_schema: (required)
-        :type finish_scraper_job_request_schema: FinishScraperJobRequestSchema
+        :param finish_job_request_schema: (required)
+        :type finish_job_request_schema: FinishJobRequestSchema
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1065,7 +1067,7 @@ class JobApi:
 
         _param = self._finish_job_v1_job_job_id_finish_post_serialize(
             job_id=job_id,
-            finish_scraper_job_request_schema=finish_scraper_job_request_schema,
+            finish_job_request_schema=finish_job_request_schema,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1086,7 +1088,7 @@ class JobApi:
     def _finish_job_v1_job_job_id_finish_post_serialize(
         self,
         job_id,
-        finish_scraper_job_request_schema,
+        finish_job_request_schema,
         _request_auth,
         _content_type,
         _headers,
@@ -1112,8 +1114,8 @@ class JobApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if finish_scraper_job_request_schema is not None:
-            _body_params = finish_scraper_job_request_schema
+        if finish_job_request_schema is not None:
+            _body_params = finish_job_request_schema
 
 
         # set the HTTP header `Accept`

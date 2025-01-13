@@ -27,13 +27,14 @@ class FinishScraperJobRequestSchema(BaseModel):
     """
     FinishScraperJobRequestSchema
     """ # noqa: E501
-    started: datetime
     finished: datetime
     success: StrictBool
     process_notes: Optional[Dict[str, Any]] = None
     error_reason: Optional[StrictStr] = None
+    retry_reached: Optional[StrictBool] = None
+    started: datetime
     scrap_notes: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["started", "finished", "success", "process_notes", "error_reason", "scrap_notes"]
+    __properties: ClassVar[List[str]] = ["finished", "success", "process_notes", "error_reason", "retry_reached", "started", "scrap_notes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,6 +85,11 @@ class FinishScraperJobRequestSchema(BaseModel):
         if self.error_reason is None and "error_reason" in self.model_fields_set:
             _dict['error_reason'] = None
 
+        # set to None if retry_reached (nullable) is None
+        # and model_fields_set contains the field
+        if self.retry_reached is None and "retry_reached" in self.model_fields_set:
+            _dict['retry_reached'] = None
+
         # set to None if scrap_notes (nullable) is None
         # and model_fields_set contains the field
         if self.scrap_notes is None and "scrap_notes" in self.model_fields_set:
@@ -101,11 +107,12 @@ class FinishScraperJobRequestSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "started": obj.get("started"),
             "finished": obj.get("finished"),
             "success": obj.get("success"),
             "process_notes": obj.get("process_notes"),
             "error_reason": obj.get("error_reason"),
+            "retry_reached": obj.get("retry_reached"),
+            "started": obj.get("started"),
             "scrap_notes": obj.get("scrap_notes")
         })
         return _obj

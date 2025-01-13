@@ -20,13 +20,12 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from trigger_service_logger_client.models.failure_reason import FailureReason
 from typing import Optional, Set
 from typing_extensions import Self
 
-class RetryJobRequestSchema(BaseModel):
+class FinishDataProcessJobRequestSchema(BaseModel):
     """
-    RetryJobRequestSchema
+    FinishDataProcessJobRequestSchema
     """ # noqa: E501
     finished: datetime
     success: StrictBool
@@ -34,9 +33,8 @@ class RetryJobRequestSchema(BaseModel):
     error_reason: Optional[StrictStr] = None
     retry_reached: Optional[StrictBool] = None
     started: datetime
-    failure_reason: FailureReason
-    scrap_notes: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["finished", "success", "process_notes", "error_reason", "retry_reached", "started", "failure_reason", "scrap_notes"]
+    data_process_notes: Optional[Dict[str, Any]] = None
+    __properties: ClassVar[List[str]] = ["finished", "success", "process_notes", "error_reason", "retry_reached", "started", "data_process_notes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -56,7 +54,7 @@ class RetryJobRequestSchema(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of RetryJobRequestSchema from a JSON string"""
+        """Create an instance of FinishDataProcessJobRequestSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -92,16 +90,16 @@ class RetryJobRequestSchema(BaseModel):
         if self.retry_reached is None and "retry_reached" in self.model_fields_set:
             _dict['retry_reached'] = None
 
-        # set to None if scrap_notes (nullable) is None
+        # set to None if data_process_notes (nullable) is None
         # and model_fields_set contains the field
-        if self.scrap_notes is None and "scrap_notes" in self.model_fields_set:
-            _dict['scrap_notes'] = None
+        if self.data_process_notes is None and "data_process_notes" in self.model_fields_set:
+            _dict['data_process_notes'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of RetryJobRequestSchema from a dict"""
+        """Create an instance of FinishDataProcessJobRequestSchema from a dict"""
         if obj is None:
             return None
 
@@ -115,8 +113,7 @@ class RetryJobRequestSchema(BaseModel):
             "error_reason": obj.get("error_reason"),
             "retry_reached": obj.get("retry_reached"),
             "started": obj.get("started"),
-            "failure_reason": obj.get("failure_reason"),
-            "scrap_notes": obj.get("scrap_notes")
+            "data_process_notes": obj.get("data_process_notes")
         })
         return _obj
 
