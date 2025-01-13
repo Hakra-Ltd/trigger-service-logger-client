@@ -18,25 +18,21 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from trigger_service_logger_client.models.failure_reason import FailureReason
+from trigger_service_logger_client.models.scrap_type import ScrapType
 from typing import Optional, Set
 from typing_extensions import Self
 
-class RetryJobRequestSchema(BaseModel):
+class ScheduledEventSchema(BaseModel):
     """
-    RetryJobRequestSchema
+    ScheduledEventSchema
     """ # noqa: E501
-    finished: datetime
-    success: StrictBool
-    process_notes: Optional[Dict[str, Any]] = None
-    error_reason: Optional[StrictStr] = None
-    retry_reached: Optional[StrictBool] = None
-    started: datetime
-    failure_reason: FailureReason
-    scrap_notes: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["finished", "success", "process_notes", "error_reason", "retry_reached", "started", "failure_reason", "scrap_notes"]
+    event_id: StrictStr
+    job_type: ScrapType
+    next_run: Optional[datetime] = None
+    run_config: Optional[Dict[str, Any]] = None
+    __properties: ClassVar[List[str]] = ["event_id", "job_type", "next_run", "run_config"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -56,7 +52,7 @@ class RetryJobRequestSchema(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of RetryJobRequestSchema from a JSON string"""
+        """Create an instance of ScheduledEventSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -77,31 +73,21 @@ class RetryJobRequestSchema(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if process_notes (nullable) is None
+        # set to None if next_run (nullable) is None
         # and model_fields_set contains the field
-        if self.process_notes is None and "process_notes" in self.model_fields_set:
-            _dict['process_notes'] = None
+        if self.next_run is None and "next_run" in self.model_fields_set:
+            _dict['next_run'] = None
 
-        # set to None if error_reason (nullable) is None
+        # set to None if run_config (nullable) is None
         # and model_fields_set contains the field
-        if self.error_reason is None and "error_reason" in self.model_fields_set:
-            _dict['error_reason'] = None
-
-        # set to None if retry_reached (nullable) is None
-        # and model_fields_set contains the field
-        if self.retry_reached is None and "retry_reached" in self.model_fields_set:
-            _dict['retry_reached'] = None
-
-        # set to None if scrap_notes (nullable) is None
-        # and model_fields_set contains the field
-        if self.scrap_notes is None and "scrap_notes" in self.model_fields_set:
-            _dict['scrap_notes'] = None
+        if self.run_config is None and "run_config" in self.model_fields_set:
+            _dict['run_config'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of RetryJobRequestSchema from a dict"""
+        """Create an instance of ScheduledEventSchema from a dict"""
         if obj is None:
             return None
 
@@ -109,14 +95,10 @@ class RetryJobRequestSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "finished": obj.get("finished"),
-            "success": obj.get("success"),
-            "process_notes": obj.get("process_notes"),
-            "error_reason": obj.get("error_reason"),
-            "retry_reached": obj.get("retry_reached"),
-            "started": obj.get("started"),
-            "failure_reason": obj.get("failure_reason"),
-            "scrap_notes": obj.get("scrap_notes")
+            "event_id": obj.get("event_id"),
+            "job_type": obj.get("job_type"),
+            "next_run": obj.get("next_run"),
+            "run_config": obj.get("run_config")
         })
         return _obj
 

@@ -31,6 +31,12 @@ class FailureReason(str, Enum):
     SCRAP_SERVICE_OVERLOAD = 'scrap_service_overload'
     DATA_ISSUE = 'data_issue'
     PROCESS_SERVICE_OVERLOAD = 'process_service_overload'
+    NO_SECTIONS = 'no_sections'
+    NOT_ON_SALE = 'not_on_sale'
+    DATA_PROCESS_ERROR = 'data_process_error'
+    TIMEOUT = 'timeout'
+    TRIGGER_PROCESS_ERROR = 'trigger_process_error'
+    DEFAULT = 'default'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

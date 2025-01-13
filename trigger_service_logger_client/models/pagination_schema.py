@@ -17,22 +17,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, StrictInt
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class FinishJobRequestSchema(BaseModel):
+class PaginationSchema(BaseModel):
     """
-    FinishJobRequestSchema
+    PaginationSchema
     """ # noqa: E501
-    finished: datetime
-    success: StrictBool
-    process_notes: Optional[Dict[str, Any]] = None
-    error_reason: Optional[StrictStr] = None
-    retry_reached: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["finished", "success", "process_notes", "error_reason", "retry_reached"]
+    page: StrictInt
+    page_limit: StrictInt
+    total_pages: StrictInt
+    total_count: StrictInt
+    __properties: ClassVar[List[str]] = ["page", "page_limit", "total_pages", "total_count"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +50,7 @@ class FinishJobRequestSchema(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FinishJobRequestSchema from a JSON string"""
+        """Create an instance of PaginationSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,26 +71,11 @@ class FinishJobRequestSchema(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if process_notes (nullable) is None
-        # and model_fields_set contains the field
-        if self.process_notes is None and "process_notes" in self.model_fields_set:
-            _dict['process_notes'] = None
-
-        # set to None if error_reason (nullable) is None
-        # and model_fields_set contains the field
-        if self.error_reason is None and "error_reason" in self.model_fields_set:
-            _dict['error_reason'] = None
-
-        # set to None if retry_reached (nullable) is None
-        # and model_fields_set contains the field
-        if self.retry_reached is None and "retry_reached" in self.model_fields_set:
-            _dict['retry_reached'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FinishJobRequestSchema from a dict"""
+        """Create an instance of PaginationSchema from a dict"""
         if obj is None:
             return None
 
@@ -100,11 +83,10 @@ class FinishJobRequestSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "finished": obj.get("finished"),
-            "success": obj.get("success"),
-            "process_notes": obj.get("process_notes"),
-            "error_reason": obj.get("error_reason"),
-            "retry_reached": obj.get("retry_reached")
+            "page": obj.get("page"),
+            "page_limit": obj.get("page_limit"),
+            "total_pages": obj.get("total_pages"),
+            "total_count": obj.get("total_count")
         })
         return _obj
 
