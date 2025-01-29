@@ -66,6 +66,7 @@ class JobApi:
     ) -> BaseResponseSchema:
         """Bulk Create Jobs
 
+        Create multiple jobs at once. Ignore the conflicts and duplicites
 
         :param create_job_request_schema: (required)
         :type create_job_request_schema: List[CreateJobRequestSchema]
@@ -133,6 +134,7 @@ class JobApi:
     ) -> ApiResponse[BaseResponseSchema]:
         """Bulk Create Jobs
 
+        Create multiple jobs at once. Ignore the conflicts and duplicites
 
         :param create_job_request_schema: (required)
         :type create_job_request_schema: List[CreateJobRequestSchema]
@@ -200,6 +202,7 @@ class JobApi:
     ) -> RESTResponseType:
         """Bulk Create Jobs
 
+        Create multiple jobs at once. Ignore the conflicts and duplicites
 
         :param create_job_request_schema: (required)
         :type create_job_request_schema: List[CreateJobRequestSchema]

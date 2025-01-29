@@ -31,7 +31,8 @@ class CreateJobRequestSchema(BaseModel):
     job_type: Optional[ScrapType] = None
     run_config: Optional[Dict[str, Any]] = None
     urgent: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["event_id", "job_type", "run_config", "urgent"]
+    no_planning: Optional[StrictBool] = None
+    __properties: ClassVar[List[str]] = ["event_id", "job_type", "run_config", "urgent", "no_planning"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -82,6 +83,11 @@ class CreateJobRequestSchema(BaseModel):
         if self.urgent is None and "urgent" in self.model_fields_set:
             _dict['urgent'] = None
 
+        # set to None if no_planning (nullable) is None
+        # and model_fields_set contains the field
+        if self.no_planning is None and "no_planning" in self.model_fields_set:
+            _dict['no_planning'] = None
+
         return _dict
 
     @classmethod
@@ -97,7 +103,8 @@ class CreateJobRequestSchema(BaseModel):
             "event_id": obj.get("event_id"),
             "job_type": obj.get("job_type"),
             "run_config": obj.get("run_config"),
-            "urgent": obj.get("urgent")
+            "urgent": obj.get("urgent"),
+            "no_planning": obj.get("no_planning")
         })
         return _obj
 
