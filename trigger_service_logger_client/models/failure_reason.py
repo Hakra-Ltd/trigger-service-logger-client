@@ -34,6 +34,7 @@ class FailureReason(str, Enum):
     NO_SECTIONS = 'no_sections'
     NOT_ON_SALE = 'not_on_sale'
     DATA_PROCESS_ERROR = 'data_process_error'
+    DATA_STORAGE_ERROR = 'data_storage_error'
     TIMEOUT = 'timeout'
     TRIGGER_PROCESS_ERROR = 'trigger_process_error'
     DEFAULT = 'default'
