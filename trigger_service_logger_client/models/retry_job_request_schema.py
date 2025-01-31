@@ -36,7 +36,8 @@ class RetryJobRequestSchema(BaseModel):
     started: datetime
     failure_reason: FailureReason
     scrap_notes: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["finished", "success", "process_notes", "error_reason", "retry_reached", "started", "failure_reason", "scrap_notes"]
+    data_process_notes: Optional[Dict[str, Any]] = None
+    __properties: ClassVar[List[str]] = ["finished", "success", "process_notes", "error_reason", "retry_reached", "started", "failure_reason", "scrap_notes", "data_process_notes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -97,6 +98,11 @@ class RetryJobRequestSchema(BaseModel):
         if self.scrap_notes is None and "scrap_notes" in self.model_fields_set:
             _dict['scrap_notes'] = None
 
+        # set to None if data_process_notes (nullable) is None
+        # and model_fields_set contains the field
+        if self.data_process_notes is None and "data_process_notes" in self.model_fields_set:
+            _dict['data_process_notes'] = None
+
         return _dict
 
     @classmethod
@@ -116,7 +122,8 @@ class RetryJobRequestSchema(BaseModel):
             "retry_reached": obj.get("retry_reached"),
             "started": obj.get("started"),
             "failure_reason": obj.get("failure_reason"),
-            "scrap_notes": obj.get("scrap_notes")
+            "scrap_notes": obj.get("scrap_notes"),
+            "data_process_notes": obj.get("data_process_notes")
         })
         return _obj
 
