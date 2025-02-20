@@ -19,6 +19,7 @@ __version__ = "1.0.0"
 # import apis into sdk package
 from trigger_service_logger_client.api.event_api import EventApi
 from trigger_service_logger_client.api.job_api import JobApi
+from trigger_service_logger_client.api.stats_api import StatsApi
 from trigger_service_logger_client.api.default_api import DefaultApi
 
 # import ApiClient
@@ -51,5 +52,9 @@ from trigger_service_logger_client.models.run_job_response_schema import RunJobR
 from trigger_service_logger_client.models.scheduled_event_schema import ScheduledEventSchema
 from trigger_service_logger_client.models.scheduled_events_response_schema import ScheduledEventsResponseSchema
 from trigger_service_logger_client.models.scrap_type import ScrapType
+from trigger_service_logger_client.models.scraped_events_count_schema import ScrapedEventsCountSchema
+from trigger_service_logger_client.models.scraping_timing_stats_schema import ScrapingTimingStatsSchema
+from trigger_service_logger_client.models.scraping_timing_time_series_sample_schema import ScrapingTimingTimeSeriesSampleSchema
+from trigger_service_logger_client.models.scraping_timing_time_series_schema import ScrapingTimingTimeSeriesSchema
 from trigger_service_logger_client.models.validation_error import ValidationError
 from trigger_service_logger_client.models.validation_error_loc_inner import ValidationErrorLocInner
