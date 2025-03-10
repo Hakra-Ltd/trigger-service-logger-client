@@ -1962,6 +1962,7 @@ class EventApi:
     async def force_job_by_event_id_v1_event_event_id_force_post(
         self,
         event_id: StrictStr,
+        scrap_type: Optional[ScrapType] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1981,6 +1982,8 @@ class EventApi:
 
         :param event_id: (required)
         :type event_id: str
+        :param scrap_type:
+        :type scrap_type: ScrapType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2005,6 +2008,7 @@ class EventApi:
 
         _param = self._force_job_by_event_id_v1_event_event_id_force_post_serialize(
             event_id=event_id,
+            scrap_type=scrap_type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2030,6 +2034,7 @@ class EventApi:
     async def force_job_by_event_id_v1_event_event_id_force_post_with_http_info(
         self,
         event_id: StrictStr,
+        scrap_type: Optional[ScrapType] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2049,6 +2054,8 @@ class EventApi:
 
         :param event_id: (required)
         :type event_id: str
+        :param scrap_type:
+        :type scrap_type: ScrapType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2073,6 +2080,7 @@ class EventApi:
 
         _param = self._force_job_by_event_id_v1_event_event_id_force_post_serialize(
             event_id=event_id,
+            scrap_type=scrap_type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2098,6 +2106,7 @@ class EventApi:
     async def force_job_by_event_id_v1_event_event_id_force_post_without_preload_content(
         self,
         event_id: StrictStr,
+        scrap_type: Optional[ScrapType] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2117,6 +2126,8 @@ class EventApi:
 
         :param event_id: (required)
         :type event_id: str
+        :param scrap_type:
+        :type scrap_type: ScrapType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2141,6 +2152,7 @@ class EventApi:
 
         _param = self._force_job_by_event_id_v1_event_event_id_force_post_serialize(
             event_id=event_id,
+            scrap_type=scrap_type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2161,6 +2173,7 @@ class EventApi:
     def _force_job_by_event_id_v1_event_event_id_force_post_serialize(
         self,
         event_id,
+        scrap_type,
         _request_auth,
         _content_type,
         _headers,
@@ -2185,6 +2198,10 @@ class EventApi:
         if event_id is not None:
             _path_params['event_id'] = event_id
         # process the query parameters
+        if scrap_type is not None:
+            
+            _query_params.append(('scrap_type', scrap_type.value))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
