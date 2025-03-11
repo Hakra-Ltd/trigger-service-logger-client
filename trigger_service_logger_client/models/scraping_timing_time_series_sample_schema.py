@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,13 +26,14 @@ class ScrapingTimingTimeSeriesSampleSchema(BaseModel):
     """
     ScrapingTimingTimeSeriesSampleSchema
     """ # noqa: E501
-    avg_scraping_time: StrictStr
-    avg_data_processing_time: StrictStr
-    avg_total_etl_time: StrictStr
-    avg_scrape_queue_duration: StrictStr
+    avg_scraping_time: Optional[StrictStr]
+    avg_data_processing_time: Optional[StrictStr]
+    avg_total_etl_time: Optional[StrictStr]
+    avg_scrape_queue_duration: Optional[StrictStr]
     total_scrapes: StrictInt
     error_count: StrictInt
-    __properties: ClassVar[List[str]] = ["avg_scraping_time", "avg_data_processing_time", "avg_total_etl_time", "avg_scrape_queue_duration", "total_scrapes", "error_count"]
+    non_error_failure_count: StrictInt
+    __properties: ClassVar[List[str]] = ["avg_scraping_time", "avg_data_processing_time", "avg_total_etl_time", "avg_scrape_queue_duration", "total_scrapes", "error_count", "non_error_failure_count"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -73,6 +74,26 @@ class ScrapingTimingTimeSeriesSampleSchema(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if avg_scraping_time (nullable) is None
+        # and model_fields_set contains the field
+        if self.avg_scraping_time is None and "avg_scraping_time" in self.model_fields_set:
+            _dict['avg_scraping_time'] = None
+
+        # set to None if avg_data_processing_time (nullable) is None
+        # and model_fields_set contains the field
+        if self.avg_data_processing_time is None and "avg_data_processing_time" in self.model_fields_set:
+            _dict['avg_data_processing_time'] = None
+
+        # set to None if avg_total_etl_time (nullable) is None
+        # and model_fields_set contains the field
+        if self.avg_total_etl_time is None and "avg_total_etl_time" in self.model_fields_set:
+            _dict['avg_total_etl_time'] = None
+
+        # set to None if avg_scrape_queue_duration (nullable) is None
+        # and model_fields_set contains the field
+        if self.avg_scrape_queue_duration is None and "avg_scrape_queue_duration" in self.model_fields_set:
+            _dict['avg_scrape_queue_duration'] = None
+
         return _dict
 
     @classmethod
@@ -90,7 +111,8 @@ class ScrapingTimingTimeSeriesSampleSchema(BaseModel):
             "avg_total_etl_time": obj.get("avg_total_etl_time"),
             "avg_scrape_queue_duration": obj.get("avg_scrape_queue_duration"),
             "total_scrapes": obj.get("total_scrapes"),
-            "error_count": obj.get("error_count")
+            "error_count": obj.get("error_count"),
+            "non_error_failure_count": obj.get("non_error_failure_count")
         })
         return _obj
 
