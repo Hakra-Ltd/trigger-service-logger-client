@@ -184,11 +184,6 @@ class RESTClientObject:
                             content_type=v[2]
                         )
                     else:
-                        # Ensures that dict objects are serialized
-                        if isinstance(v, dict):
-                            v = json.dumps(v)
-                        elif isinstance(v, int):
-                            v = str(v)
                         data.add_field(k, v)
                 args["data"] = data
 
@@ -213,3 +208,8 @@ class RESTClientObject:
         r = await pool_manager.request(**args)
 
         return RESTResponse(r)
+
+
+
+
+

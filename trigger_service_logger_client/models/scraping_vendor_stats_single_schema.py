@@ -17,23 +17,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ScrapingTimingStatsSingleSchema(BaseModel):
+class ScrapingVendorStatsSingleSchema(BaseModel):
     """
-    ScrapingTimingStatsSingleSchema
+    ScrapingVendorStatsSingleSchema
     """ # noqa: E501
-    avg_scraping_time: Optional[StrictStr]
-    avg_data_processing_time: Optional[StrictStr]
-    avg_total_etl_time: Optional[StrictStr]
-    avg_scrape_queue_duration: Optional[StrictStr]
-    total_scrapes: StrictInt
-    error_count: StrictInt
-    non_error_failure_count: StrictInt
-    __properties: ClassVar[List[str]] = ["avg_scraping_time", "avg_data_processing_time", "avg_total_etl_time", "avg_scrape_queue_duration", "total_scrapes", "error_count", "non_error_failure_count"]
+    total_requests: StrictInt
+    success_rate: Optional[Union[StrictFloat, StrictInt]]
+    avg_scrape_time: Optional[StrictStr]
+    error_rate: Optional[Union[StrictFloat, StrictInt]]
+    __properties: ClassVar[List[str]] = ["total_requests", "success_rate", "avg_scrape_time", "error_rate"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +50,7 @@ class ScrapingTimingStatsSingleSchema(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ScrapingTimingStatsSingleSchema from a JSON string"""
+        """Create an instance of ScrapingVendorStatsSingleSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,31 +71,26 @@ class ScrapingTimingStatsSingleSchema(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if avg_scraping_time (nullable) is None
+        # set to None if success_rate (nullable) is None
         # and model_fields_set contains the field
-        if self.avg_scraping_time is None and "avg_scraping_time" in self.model_fields_set:
-            _dict['avg_scraping_time'] = None
+        if self.success_rate is None and "success_rate" in self.model_fields_set:
+            _dict['success_rate'] = None
 
-        # set to None if avg_data_processing_time (nullable) is None
+        # set to None if avg_scrape_time (nullable) is None
         # and model_fields_set contains the field
-        if self.avg_data_processing_time is None and "avg_data_processing_time" in self.model_fields_set:
-            _dict['avg_data_processing_time'] = None
+        if self.avg_scrape_time is None and "avg_scrape_time" in self.model_fields_set:
+            _dict['avg_scrape_time'] = None
 
-        # set to None if avg_total_etl_time (nullable) is None
+        # set to None if error_rate (nullable) is None
         # and model_fields_set contains the field
-        if self.avg_total_etl_time is None and "avg_total_etl_time" in self.model_fields_set:
-            _dict['avg_total_etl_time'] = None
-
-        # set to None if avg_scrape_queue_duration (nullable) is None
-        # and model_fields_set contains the field
-        if self.avg_scrape_queue_duration is None and "avg_scrape_queue_duration" in self.model_fields_set:
-            _dict['avg_scrape_queue_duration'] = None
+        if self.error_rate is None and "error_rate" in self.model_fields_set:
+            _dict['error_rate'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ScrapingTimingStatsSingleSchema from a dict"""
+        """Create an instance of ScrapingVendorStatsSingleSchema from a dict"""
         if obj is None:
             return None
 
@@ -106,13 +98,10 @@ class ScrapingTimingStatsSingleSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "avg_scraping_time": obj.get("avg_scraping_time"),
-            "avg_data_processing_time": obj.get("avg_data_processing_time"),
-            "avg_total_etl_time": obj.get("avg_total_etl_time"),
-            "avg_scrape_queue_duration": obj.get("avg_scrape_queue_duration"),
-            "total_scrapes": obj.get("total_scrapes"),
-            "error_count": obj.get("error_count"),
-            "non_error_failure_count": obj.get("non_error_failure_count")
+            "total_requests": obj.get("total_requests"),
+            "success_rate": obj.get("success_rate"),
+            "avg_scrape_time": obj.get("avg_scrape_time"),
+            "error_rate": obj.get("error_rate")
         })
         return _obj
 
