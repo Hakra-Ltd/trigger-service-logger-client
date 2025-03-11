@@ -17,21 +17,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from trigger_service_logger_client.models.scrap_type import ScrapType
+from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
-class JobRunMessage(BaseModel):
+class ScrapingVendorStatsSingleSchema(BaseModel):
     """
-    JobRunMessage
+    ScrapingVendorStatsSingleSchema
     """ # noqa: E501
-    job_run_id: StrictStr
-    event_id: StrictStr
-    scrap_type: Optional[ScrapType]
-    run_config: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["job_run_id", "event_id", "scrap_type", "run_config"]
+    total_requests: StrictInt
+    success_rate: Optional[Union[StrictFloat, StrictInt]]
+    avg_scrape_time: Optional[StrictStr]
+    error_rate: Optional[Union[StrictFloat, StrictInt]]
+    __properties: ClassVar[List[str]] = ["total_requests", "success_rate", "avg_scrape_time", "error_rate"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +50,7 @@ class JobRunMessage(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of JobRunMessage from a JSON string"""
+        """Create an instance of ScrapingVendorStatsSingleSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,21 +71,26 @@ class JobRunMessage(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if scrap_type (nullable) is None
+        # set to None if success_rate (nullable) is None
         # and model_fields_set contains the field
-        if self.scrap_type is None and "scrap_type" in self.model_fields_set:
-            _dict['scrap_type'] = None
+        if self.success_rate is None and "success_rate" in self.model_fields_set:
+            _dict['success_rate'] = None
 
-        # set to None if run_config (nullable) is None
+        # set to None if avg_scrape_time (nullable) is None
         # and model_fields_set contains the field
-        if self.run_config is None and "run_config" in self.model_fields_set:
-            _dict['run_config'] = None
+        if self.avg_scrape_time is None and "avg_scrape_time" in self.model_fields_set:
+            _dict['avg_scrape_time'] = None
+
+        # set to None if error_rate (nullable) is None
+        # and model_fields_set contains the field
+        if self.error_rate is None and "error_rate" in self.model_fields_set:
+            _dict['error_rate'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of JobRunMessage from a dict"""
+        """Create an instance of ScrapingVendorStatsSingleSchema from a dict"""
         if obj is None:
             return None
 
@@ -94,10 +98,10 @@ class JobRunMessage(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "job_run_id": obj.get("job_run_id"),
-            "event_id": obj.get("event_id"),
-            "scrap_type": obj.get("scrap_type"),
-            "run_config": obj.get("run_config")
+            "total_requests": obj.get("total_requests"),
+            "success_rate": obj.get("success_rate"),
+            "avg_scrape_time": obj.get("avg_scrape_time"),
+            "error_rate": obj.get("error_rate")
         })
         return _obj
 
