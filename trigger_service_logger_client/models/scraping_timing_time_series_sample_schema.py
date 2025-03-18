@@ -32,7 +32,8 @@ class ScrapingTimingTimeSeriesSampleSchema(BaseModel):
     avg_scrape_queue_duration: Optional[StrictStr]
     total_scrapes: StrictInt
     error_count: StrictInt
-    __properties: ClassVar[List[str]] = ["avg_scraping_time", "avg_data_processing_time", "avg_total_etl_time", "avg_scrape_queue_duration", "total_scrapes", "error_count"]
+    non_error_failure_count: StrictInt
+    __properties: ClassVar[List[str]] = ["avg_scraping_time", "avg_data_processing_time", "avg_total_etl_time", "avg_scrape_queue_duration", "total_scrapes", "error_count", "non_error_failure_count"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -110,7 +111,8 @@ class ScrapingTimingTimeSeriesSampleSchema(BaseModel):
             "avg_total_etl_time": obj.get("avg_total_etl_time"),
             "avg_scrape_queue_duration": obj.get("avg_scrape_queue_duration"),
             "total_scrapes": obj.get("total_scrapes"),
-            "error_count": obj.get("error_count")
+            "error_count": obj.get("error_count"),
+            "non_error_failure_count": obj.get("non_error_failure_count")
         })
         return _obj
 
