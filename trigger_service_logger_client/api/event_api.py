@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictInt, StrictStr
+from pydantic import Field, StrictBool, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
 from trigger_service_logger_client.models.base_response_schema import BaseResponseSchema
@@ -2227,6 +2227,7 @@ class EventApi:
         self,
         event_id: StrictStr,
         scrap_type: Optional[ScrapType] = None,
+        enable: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2248,6 +2249,8 @@ class EventApi:
         :type event_id: str
         :param scrap_type:
         :type scrap_type: ScrapType
+        :param enable:
+        :type enable: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2273,6 +2276,7 @@ class EventApi:
         _param = self._force_job_by_event_id_v1_event_event_id_force_post_serialize(
             event_id=event_id,
             scrap_type=scrap_type,
+            enable=enable,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2299,6 +2303,7 @@ class EventApi:
         self,
         event_id: StrictStr,
         scrap_type: Optional[ScrapType] = None,
+        enable: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2320,6 +2325,8 @@ class EventApi:
         :type event_id: str
         :param scrap_type:
         :type scrap_type: ScrapType
+        :param enable:
+        :type enable: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2345,6 +2352,7 @@ class EventApi:
         _param = self._force_job_by_event_id_v1_event_event_id_force_post_serialize(
             event_id=event_id,
             scrap_type=scrap_type,
+            enable=enable,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2371,6 +2379,7 @@ class EventApi:
         self,
         event_id: StrictStr,
         scrap_type: Optional[ScrapType] = None,
+        enable: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2392,6 +2401,8 @@ class EventApi:
         :type event_id: str
         :param scrap_type:
         :type scrap_type: ScrapType
+        :param enable:
+        :type enable: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2417,6 +2428,7 @@ class EventApi:
         _param = self._force_job_by_event_id_v1_event_event_id_force_post_serialize(
             event_id=event_id,
             scrap_type=scrap_type,
+            enable=enable,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2438,6 +2450,7 @@ class EventApi:
         self,
         event_id,
         scrap_type,
+        enable,
         _request_auth,
         _content_type,
         _headers,
@@ -2463,6 +2476,10 @@ class EventApi:
         if scrap_type is not None:
             
             _query_params.append(('scrap_type', scrap_type.value))
+            
+        if enable is not None:
+            
+            _query_params.append(('enable', enable))
             
         # process the header parameters
         # process the form parameters
