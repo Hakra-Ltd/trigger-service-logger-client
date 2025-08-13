@@ -33,6 +33,8 @@ class ScrapType(str, Enum):
     EVENUE_MINUS_SECTION = 'evenue-section'
     EVENUE_MINUS_PRICES = 'evenue-prices'
     STUBHUB = 'stubhub'
+    TICKPICK = 'tickpick'
+    GOTICKETS = 'gotickets'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

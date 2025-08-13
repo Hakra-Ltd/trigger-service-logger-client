@@ -2535,7 +2535,7 @@ class JobApi:
     async def set_job_data_process_notes_v1_job_job_id_data_process_notes_patch(
         self,
         job_id: StrictStr,
-        body: Dict[str, Any],
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2555,8 +2555,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param body: (required)
-        :type body: object
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2581,7 +2581,7 @@ class JobApi:
 
         _param = self._set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
             job_id=job_id,
-            body=body,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2607,7 +2607,7 @@ class JobApi:
     async def set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_with_http_info(
         self,
         job_id: StrictStr,
-        body: Dict[str, Any],
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2627,8 +2627,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param body: (required)
-        :type body: object
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2653,7 +2653,7 @@ class JobApi:
 
         _param = self._set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
             job_id=job_id,
-            body=body,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2679,7 +2679,7 @@ class JobApi:
     async def set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_without_preload_content(
         self,
         job_id: StrictStr,
-        body: Dict[str, Any],
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2699,8 +2699,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param body: (required)
-        :type body: object
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2725,7 +2725,7 @@ class JobApi:
 
         _param = self._set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
             job_id=job_id,
-            body=body,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2746,7 +2746,7 @@ class JobApi:
     def _set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
         self,
         job_id,
-        body,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -2774,8 +2774,8 @@ class JobApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body is not None:
-            _body_params = body
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`
