@@ -19,19 +19,23 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from trigger_service_logger_client.models.scrap_type import ScrapType
 from typing import Optional, Set
 from typing_extensions import Self
 
-class JobRunMessage(BaseModel):
+class VenueSchema(BaseModel):
     """
-    JobRunMessage
+    VenueSchema
     """ # noqa: E501
-    job_run_id: StrictStr
-    event_id: StrictStr
-    scrap_type: Optional[ScrapType]
-    run_config: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["job_run_id", "event_id", "scrap_type", "run_config"]
+    id: StrictStr
+    exchange: StrictStr
+    venue_id: StrictStr
+    name: StrictStr
+    address: Optional[StrictStr]
+    city: Optional[StrictStr]
+    postal_code: Optional[StrictStr]
+    state: Optional[StrictStr]
+    country: Optional[StrictStr]
+    __properties: ClassVar[List[str]] = ["id", "exchange", "venue_id", "name", "address", "city", "postal_code", "state", "country"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +55,7 @@ class JobRunMessage(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of JobRunMessage from a JSON string"""
+        """Create an instance of VenueSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,21 +76,36 @@ class JobRunMessage(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if scrap_type (nullable) is None
+        # set to None if address (nullable) is None
         # and model_fields_set contains the field
-        if self.scrap_type is None and "scrap_type" in self.model_fields_set:
-            _dict['scrap_type'] = None
+        if self.address is None and "address" in self.model_fields_set:
+            _dict['address'] = None
 
-        # set to None if run_config (nullable) is None
+        # set to None if city (nullable) is None
         # and model_fields_set contains the field
-        if self.run_config is None and "run_config" in self.model_fields_set:
-            _dict['run_config'] = None
+        if self.city is None and "city" in self.model_fields_set:
+            _dict['city'] = None
+
+        # set to None if postal_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.postal_code is None and "postal_code" in self.model_fields_set:
+            _dict['postal_code'] = None
+
+        # set to None if state (nullable) is None
+        # and model_fields_set contains the field
+        if self.state is None and "state" in self.model_fields_set:
+            _dict['state'] = None
+
+        # set to None if country (nullable) is None
+        # and model_fields_set contains the field
+        if self.country is None and "country" in self.model_fields_set:
+            _dict['country'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of JobRunMessage from a dict"""
+        """Create an instance of VenueSchema from a dict"""
         if obj is None:
             return None
 
@@ -94,10 +113,15 @@ class JobRunMessage(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "job_run_id": obj.get("job_run_id"),
-            "event_id": obj.get("event_id"),
-            "scrap_type": obj.get("scrap_type"),
-            "run_config": obj.get("run_config")
+            "id": obj.get("id"),
+            "exchange": obj.get("exchange"),
+            "venue_id": obj.get("venue_id"),
+            "name": obj.get("name"),
+            "address": obj.get("address"),
+            "city": obj.get("city"),
+            "postal_code": obj.get("postal_code"),
+            "state": obj.get("state"),
+            "country": obj.get("country")
         })
         return _obj
 

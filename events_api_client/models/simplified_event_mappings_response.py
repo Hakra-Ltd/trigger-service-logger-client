@@ -17,21 +17,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from trigger_service_logger_client.models.scrap_type import ScrapType
+from events_api_client.models.format_info import FormatInfo
 from typing import Optional, Set
 from typing_extensions import Self
 
-class JobRunMessage(BaseModel):
+class SimplifiedEventMappingsResponse(BaseModel):
     """
-    JobRunMessage
+    Simplified API response for event mappings.
     """ # noqa: E501
-    job_run_id: StrictStr
-    event_id: StrictStr
-    scrap_type: Optional[ScrapType]
-    run_config: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["job_run_id", "event_id", "scrap_type", "run_config"]
+    mappings: Dict[str, Any] = Field(description="Event mappings data")
+    count: StrictInt = Field(description="Number of mappings being returned")
+    format: FormatInfo = Field(description="Format and structure information")
+    timestamp: Optional[StrictStr] = Field(default=None, description="Timestamp when mappings were last updated")
+    urls: Optional[Dict[str, Any]] = None
+    __properties: ClassVar[List[str]] = ["mappings", "count", "format", "timestamp", "urls"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +52,7 @@ class JobRunMessage(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of JobRunMessage from a JSON string"""
+        """Create an instance of SimplifiedEventMappingsResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,21 +73,19 @@ class JobRunMessage(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if scrap_type (nullable) is None
+        # override the default output from pydantic by calling `to_dict()` of format
+        if self.format:
+            _dict['format'] = self.format.to_dict()
+        # set to None if urls (nullable) is None
         # and model_fields_set contains the field
-        if self.scrap_type is None and "scrap_type" in self.model_fields_set:
-            _dict['scrap_type'] = None
-
-        # set to None if run_config (nullable) is None
-        # and model_fields_set contains the field
-        if self.run_config is None and "run_config" in self.model_fields_set:
-            _dict['run_config'] = None
+        if self.urls is None and "urls" in self.model_fields_set:
+            _dict['urls'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of JobRunMessage from a dict"""
+        """Create an instance of SimplifiedEventMappingsResponse from a dict"""
         if obj is None:
             return None
 
@@ -94,10 +93,11 @@ class JobRunMessage(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "job_run_id": obj.get("job_run_id"),
-            "event_id": obj.get("event_id"),
-            "scrap_type": obj.get("scrap_type"),
-            "run_config": obj.get("run_config")
+            "mappings": obj.get("mappings"),
+            "count": obj.get("count"),
+            "format": FormatInfo.from_dict(obj["format"]) if obj.get("format") is not None else None,
+            "timestamp": obj.get("timestamp"),
+            "urls": obj.get("urls")
         })
         return _obj
 
