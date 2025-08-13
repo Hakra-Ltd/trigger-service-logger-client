@@ -17,27 +17,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ScrapedEventsCountSchema(BaseModel):
+class FormatInfo(BaseModel):
     """
-    ScrapedEventsCountSchema
+    Format information for event mappings.
     """ # noqa: E501
-    ticketmaster: StrictInt
-    vividseats: StrictInt
-    evenue: StrictInt
-    tickpick: StrictInt
-    stubhub: StrictInt
-    gotickets: StrictInt
-    milb: StrictInt
-    mlb: StrictInt
-    playhousesquare: StrictInt
-    telecharge: StrictInt
-    mpv: StrictInt
-    __properties: ClassVar[List[str]] = ["ticketmaster", "vividseats", "evenue", "tickpick", "stubhub", "gotickets", "milb", "mlb", "playhousesquare", "telecharge", "mpv"]
+    structure: StrictStr = Field(description="Description of the mapping structure")
+    primary_markets: List[StrictStr] = Field(description="List of primary market names")
+    secondary_markets: List[StrictStr] = Field(description="List of secondary market names")
+    secondary_market_indices: Dict[str, StrictInt] = Field(description="Index mapping for secondary markets")
+    has_urls: StrictBool = Field(description="Whether URL mappings are available")
+    urls_structure: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["structure", "primary_markets", "secondary_markets", "secondary_market_indices", "has_urls", "urls_structure"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -57,7 +52,7 @@ class ScrapedEventsCountSchema(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ScrapedEventsCountSchema from a JSON string"""
+        """Create an instance of FormatInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,11 +73,16 @@ class ScrapedEventsCountSchema(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if urls_structure (nullable) is None
+        # and model_fields_set contains the field
+        if self.urls_structure is None and "urls_structure" in self.model_fields_set:
+            _dict['urls_structure'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ScrapedEventsCountSchema from a dict"""
+        """Create an instance of FormatInfo from a dict"""
         if obj is None:
             return None
 
@@ -90,17 +90,12 @@ class ScrapedEventsCountSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "ticketmaster": obj.get("ticketmaster"),
-            "vividseats": obj.get("vividseats"),
-            "evenue": obj.get("evenue"),
-            "tickpick": obj.get("tickpick"),
-            "stubhub": obj.get("stubhub"),
-            "gotickets": obj.get("gotickets"),
-            "milb": obj.get("milb"),
-            "mlb": obj.get("mlb"),
-            "playhousesquare": obj.get("playhousesquare"),
-            "telecharge": obj.get("telecharge"),
-            "mpv": obj.get("mpv")
+            "structure": obj.get("structure"),
+            "primary_markets": obj.get("primary_markets"),
+            "secondary_markets": obj.get("secondary_markets"),
+            "secondary_market_indices": obj.get("secondary_market_indices"),
+            "has_urls": obj.get("has_urls"),
+            "urls_structure": obj.get("urls_structure")
         })
         return _obj
 

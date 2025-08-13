@@ -17,27 +17,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ScrapedEventsCountSchema(BaseModel):
+class PaciolanEventMetadataSchema(BaseModel):
     """
-    ScrapedEventsCountSchema
+    PaciolanEventMetadataSchema
     """ # noqa: E501
-    ticketmaster: StrictInt
-    vividseats: StrictInt
-    evenue: StrictInt
-    tickpick: StrictInt
-    stubhub: StrictInt
-    gotickets: StrictInt
-    milb: StrictInt
-    mlb: StrictInt
-    playhousesquare: StrictInt
-    telecharge: StrictInt
-    mpv: StrictInt
-    __properties: ClassVar[List[str]] = ["ticketmaster", "vividseats", "evenue", "tickpick", "stubhub", "gotickets", "milb", "mlb", "playhousesquare", "telecharge", "mpv"]
+    data_acc_id: StrictInt
+    link_id: StrictStr
+    site_id: StrictStr
+    distributor_id: StrictStr
+    host_name: StrictStr
+    event_code: StrictStr
+    __properties: ClassVar[List[str]] = ["data_acc_id", "link_id", "site_id", "distributor_id", "host_name", "event_code"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -57,7 +52,7 @@ class ScrapedEventsCountSchema(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ScrapedEventsCountSchema from a JSON string"""
+        """Create an instance of PaciolanEventMetadataSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -82,7 +77,7 @@ class ScrapedEventsCountSchema(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ScrapedEventsCountSchema from a dict"""
+        """Create an instance of PaciolanEventMetadataSchema from a dict"""
         if obj is None:
             return None
 
@@ -90,17 +85,12 @@ class ScrapedEventsCountSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "ticketmaster": obj.get("ticketmaster"),
-            "vividseats": obj.get("vividseats"),
-            "evenue": obj.get("evenue"),
-            "tickpick": obj.get("tickpick"),
-            "stubhub": obj.get("stubhub"),
-            "gotickets": obj.get("gotickets"),
-            "milb": obj.get("milb"),
-            "mlb": obj.get("mlb"),
-            "playhousesquare": obj.get("playhousesquare"),
-            "telecharge": obj.get("telecharge"),
-            "mpv": obj.get("mpv")
+            "data_acc_id": obj.get("data_acc_id"),
+            "link_id": obj.get("link_id"),
+            "site_id": obj.get("site_id"),
+            "distributor_id": obj.get("distributor_id"),
+            "host_name": obj.get("host_name"),
+            "event_code": obj.get("event_code")
         })
         return _obj
 

@@ -17,27 +17,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
+from events_api_client.models.category_type_schema import CategoryTypeSchema
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ScrapedEventsCountSchema(BaseModel):
+class CategoryTypeListSchema(BaseModel):
     """
-    ScrapedEventsCountSchema
+    CategoryTypeListSchema
     """ # noqa: E501
-    ticketmaster: StrictInt
-    vividseats: StrictInt
-    evenue: StrictInt
-    tickpick: StrictInt
-    stubhub: StrictInt
-    gotickets: StrictInt
-    milb: StrictInt
-    mlb: StrictInt
-    playhousesquare: StrictInt
-    telecharge: StrictInt
-    mpv: StrictInt
-    __properties: ClassVar[List[str]] = ["ticketmaster", "vividseats", "evenue", "tickpick", "stubhub", "gotickets", "milb", "mlb", "playhousesquare", "telecharge", "mpv"]
+    types: List[CategoryTypeSchema]
+    __properties: ClassVar[List[str]] = ["types"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -57,7 +48,7 @@ class ScrapedEventsCountSchema(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ScrapedEventsCountSchema from a JSON string"""
+        """Create an instance of CategoryTypeListSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,11 +69,18 @@ class ScrapedEventsCountSchema(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in types (list)
+        _items = []
+        if self.types:
+            for _item_types in self.types:
+                if _item_types:
+                    _items.append(_item_types.to_dict())
+            _dict['types'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ScrapedEventsCountSchema from a dict"""
+        """Create an instance of CategoryTypeListSchema from a dict"""
         if obj is None:
             return None
 
@@ -90,17 +88,7 @@ class ScrapedEventsCountSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "ticketmaster": obj.get("ticketmaster"),
-            "vividseats": obj.get("vividseats"),
-            "evenue": obj.get("evenue"),
-            "tickpick": obj.get("tickpick"),
-            "stubhub": obj.get("stubhub"),
-            "gotickets": obj.get("gotickets"),
-            "milb": obj.get("milb"),
-            "mlb": obj.get("mlb"),
-            "playhousesquare": obj.get("playhousesquare"),
-            "telecharge": obj.get("telecharge"),
-            "mpv": obj.get("mpv")
+            "types": [CategoryTypeSchema.from_dict(_item) for _item in obj["types"]] if obj.get("types") is not None else None
         })
         return _obj
 

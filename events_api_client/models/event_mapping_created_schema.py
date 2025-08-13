@@ -17,27 +17,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ScrapedEventsCountSchema(BaseModel):
+class EventMappingCreatedSchema(BaseModel):
     """
-    ScrapedEventsCountSchema
+    Schema for a single created event mapping.
     """ # noqa: E501
-    ticketmaster: StrictInt
-    vividseats: StrictInt
-    evenue: StrictInt
-    tickpick: StrictInt
-    stubhub: StrictInt
-    gotickets: StrictInt
-    milb: StrictInt
-    mlb: StrictInt
-    playhousesquare: StrictInt
-    telecharge: StrictInt
-    mpv: StrictInt
-    __properties: ClassVar[List[str]] = ["ticketmaster", "vividseats", "evenue", "tickpick", "stubhub", "gotickets", "milb", "mlb", "playhousesquare", "telecharge", "mpv"]
+    event_id: StrictStr = Field(description="Target event ID from secondary marketplace")
+    url: Optional[StrictStr] = None
+    exchange: StrictStr = Field(description="Secondary marketplace exchange name")
+    __properties: ClassVar[List[str]] = ["event_id", "url", "exchange"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -57,7 +49,7 @@ class ScrapedEventsCountSchema(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ScrapedEventsCountSchema from a JSON string"""
+        """Create an instance of EventMappingCreatedSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,11 +70,16 @@ class ScrapedEventsCountSchema(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if url (nullable) is None
+        # and model_fields_set contains the field
+        if self.url is None and "url" in self.model_fields_set:
+            _dict['url'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ScrapedEventsCountSchema from a dict"""
+        """Create an instance of EventMappingCreatedSchema from a dict"""
         if obj is None:
             return None
 
@@ -90,17 +87,9 @@ class ScrapedEventsCountSchema(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "ticketmaster": obj.get("ticketmaster"),
-            "vividseats": obj.get("vividseats"),
-            "evenue": obj.get("evenue"),
-            "tickpick": obj.get("tickpick"),
-            "stubhub": obj.get("stubhub"),
-            "gotickets": obj.get("gotickets"),
-            "milb": obj.get("milb"),
-            "mlb": obj.get("mlb"),
-            "playhousesquare": obj.get("playhousesquare"),
-            "telecharge": obj.get("telecharge"),
-            "mpv": obj.get("mpv")
+            "event_id": obj.get("event_id"),
+            "url": obj.get("url"),
+            "exchange": obj.get("exchange")
         })
         return _obj
 

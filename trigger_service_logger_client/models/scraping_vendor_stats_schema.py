@@ -31,7 +31,12 @@ class ScrapingVendorStatsSchema(BaseModel):
     algorithm: Optional[ScrapingVendorStatsSingleSchema] = None
     bright_data: Optional[ScrapingVendorStatsSingleSchema] = None
     browser_js: Optional[ScrapingVendorStatsSingleSchema] = None
-    __properties: ClassVar[List[str]] = ["nimble", "algorithm", "bright_data", "browser_js"]
+    bright_data_datacenter: Optional[ScrapingVendorStatsSingleSchema] = None
+    stubhub_aws_waf: Optional[ScrapingVendorStatsSingleSchema] = None
+    gotickets_pow_jsd: Optional[ScrapingVendorStatsSingleSchema] = None
+    tickpick_jsd_mobile: Optional[ScrapingVendorStatsSingleSchema] = None
+    telecharge_tls: Optional[ScrapingVendorStatsSingleSchema] = None
+    __properties: ClassVar[List[str]] = ["nimble", "algorithm", "bright_data", "browser_js", "bright_data_datacenter", "stubhub_aws_waf", "gotickets_pow_jsd", "tickpick_jsd_mobile", "telecharge_tls"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,6 +89,21 @@ class ScrapingVendorStatsSchema(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of browser_js
         if self.browser_js:
             _dict['browser_js'] = self.browser_js.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of bright_data_datacenter
+        if self.bright_data_datacenter:
+            _dict['bright_data_datacenter'] = self.bright_data_datacenter.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of stubhub_aws_waf
+        if self.stubhub_aws_waf:
+            _dict['stubhub_aws_waf'] = self.stubhub_aws_waf.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of gotickets_pow_jsd
+        if self.gotickets_pow_jsd:
+            _dict['gotickets_pow_jsd'] = self.gotickets_pow_jsd.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of tickpick_jsd_mobile
+        if self.tickpick_jsd_mobile:
+            _dict['tickpick_jsd_mobile'] = self.tickpick_jsd_mobile.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of telecharge_tls
+        if self.telecharge_tls:
+            _dict['telecharge_tls'] = self.telecharge_tls.to_dict()
         # set to None if nimble (nullable) is None
         # and model_fields_set contains the field
         if self.nimble is None and "nimble" in self.model_fields_set:
@@ -104,6 +124,31 @@ class ScrapingVendorStatsSchema(BaseModel):
         if self.browser_js is None and "browser_js" in self.model_fields_set:
             _dict['browser_js'] = None
 
+        # set to None if bright_data_datacenter (nullable) is None
+        # and model_fields_set contains the field
+        if self.bright_data_datacenter is None and "bright_data_datacenter" in self.model_fields_set:
+            _dict['bright_data_datacenter'] = None
+
+        # set to None if stubhub_aws_waf (nullable) is None
+        # and model_fields_set contains the field
+        if self.stubhub_aws_waf is None and "stubhub_aws_waf" in self.model_fields_set:
+            _dict['stubhub_aws_waf'] = None
+
+        # set to None if gotickets_pow_jsd (nullable) is None
+        # and model_fields_set contains the field
+        if self.gotickets_pow_jsd is None and "gotickets_pow_jsd" in self.model_fields_set:
+            _dict['gotickets_pow_jsd'] = None
+
+        # set to None if tickpick_jsd_mobile (nullable) is None
+        # and model_fields_set contains the field
+        if self.tickpick_jsd_mobile is None and "tickpick_jsd_mobile" in self.model_fields_set:
+            _dict['tickpick_jsd_mobile'] = None
+
+        # set to None if telecharge_tls (nullable) is None
+        # and model_fields_set contains the field
+        if self.telecharge_tls is None and "telecharge_tls" in self.model_fields_set:
+            _dict['telecharge_tls'] = None
+
         return _dict
 
     @classmethod
@@ -119,7 +164,12 @@ class ScrapingVendorStatsSchema(BaseModel):
             "nimble": ScrapingVendorStatsSingleSchema.from_dict(obj["nimble"]) if obj.get("nimble") is not None else None,
             "algorithm": ScrapingVendorStatsSingleSchema.from_dict(obj["algorithm"]) if obj.get("algorithm") is not None else None,
             "bright_data": ScrapingVendorStatsSingleSchema.from_dict(obj["bright_data"]) if obj.get("bright_data") is not None else None,
-            "browser_js": ScrapingVendorStatsSingleSchema.from_dict(obj["browser_js"]) if obj.get("browser_js") is not None else None
+            "browser_js": ScrapingVendorStatsSingleSchema.from_dict(obj["browser_js"]) if obj.get("browser_js") is not None else None,
+            "bright_data_datacenter": ScrapingVendorStatsSingleSchema.from_dict(obj["bright_data_datacenter"]) if obj.get("bright_data_datacenter") is not None else None,
+            "stubhub_aws_waf": ScrapingVendorStatsSingleSchema.from_dict(obj["stubhub_aws_waf"]) if obj.get("stubhub_aws_waf") is not None else None,
+            "gotickets_pow_jsd": ScrapingVendorStatsSingleSchema.from_dict(obj["gotickets_pow_jsd"]) if obj.get("gotickets_pow_jsd") is not None else None,
+            "tickpick_jsd_mobile": ScrapingVendorStatsSingleSchema.from_dict(obj["tickpick_jsd_mobile"]) if obj.get("tickpick_jsd_mobile") is not None else None,
+            "telecharge_tls": ScrapingVendorStatsSingleSchema.from_dict(obj["telecharge_tls"]) if obj.get("telecharge_tls") is not None else None
         })
         return _obj
 

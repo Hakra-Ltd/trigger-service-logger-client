@@ -27,11 +27,11 @@ from urllib.parse import quote
 from typing import Tuple, Optional, List, Dict, Union
 from pydantic import SecretStr
 
-from trigger_service_logger_client.configuration import Configuration
-from trigger_service_logger_client.api_response import ApiResponse, T as ApiResponseT
-import trigger_service_logger_client.models
-from trigger_service_logger_client import rest
-from trigger_service_logger_client.exceptions import (
+from events_api_client.configuration import Configuration
+from events_api_client.api_response import ApiResponse, T as ApiResponseT
+import events_api_client.models
+from events_api_client import rest
+from events_api_client.exceptions import (
     ApiValueError,
     ApiException,
     BadRequestException,
@@ -459,17 +459,17 @@ class ApiClient:
             if klass in self.NATIVE_TYPES_MAPPING:
                 klass = self.NATIVE_TYPES_MAPPING[klass]
             else:
-                klass = getattr(trigger_service_logger_client.models, klass)
+                klass = getattr(events_api_client.models, klass)
 
         if klass in self.PRIMITIVE_TYPES:
             return self.__deserialize_primitive(data, klass)
-        elif klass is object:
+        elif klass == object:
             return self.__deserialize_object(data)
-        elif klass is datetime.date:
+        elif klass == datetime.date:
             return self.__deserialize_date(data)
-        elif klass is datetime.datetime:
+        elif klass == datetime.datetime:
             return self.__deserialize_datetime(data)
-        elif klass is decimal.Decimal:
+        elif klass == decimal.Decimal:
             return decimal.Decimal(data)
         elif issubclass(klass, Enum):
             return self.__deserialize_enum(data, klass)

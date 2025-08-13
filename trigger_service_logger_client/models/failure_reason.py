@@ -26,6 +26,7 @@ class FailureReason(str, Enum):
     """
     allowed enum values
     """
+    ACCESS_DENIED = 'access_denied'
     PROXY_ERROR = 'proxy_error'
     NOT_FOUND = 'not_found'
     SCRAP_SERVICE_OVERLOAD = 'scrap_service_overload'
