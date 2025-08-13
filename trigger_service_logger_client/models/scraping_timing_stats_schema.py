@@ -30,7 +30,13 @@ class ScrapingTimingStatsSchema(BaseModel):
     ticketmaster: Optional[ScrapingTimingStatsSingleSchema]
     vividseats: Optional[ScrapingTimingStatsSingleSchema]
     evenue: Optional[ScrapingTimingStatsSingleSchema]
-    __properties: ClassVar[List[str]] = ["ticketmaster", "vividseats", "evenue"]
+    tickpick: Optional[ScrapingTimingStatsSingleSchema]
+    stubhub: Optional[ScrapingTimingStatsSingleSchema]
+    gotickets: Optional[ScrapingTimingStatsSingleSchema]
+    milb: Optional[ScrapingTimingStatsSingleSchema]
+    mlb: Optional[ScrapingTimingStatsSingleSchema]
+    playhousesquare: Optional[ScrapingTimingStatsSingleSchema]
+    __properties: ClassVar[List[str]] = ["ticketmaster", "vividseats", "evenue", "tickpick", "stubhub", "gotickets", "milb", "mlb", "playhousesquare"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -80,6 +86,24 @@ class ScrapingTimingStatsSchema(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of evenue
         if self.evenue:
             _dict['evenue'] = self.evenue.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of tickpick
+        if self.tickpick:
+            _dict['tickpick'] = self.tickpick.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of stubhub
+        if self.stubhub:
+            _dict['stubhub'] = self.stubhub.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of gotickets
+        if self.gotickets:
+            _dict['gotickets'] = self.gotickets.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of milb
+        if self.milb:
+            _dict['milb'] = self.milb.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of mlb
+        if self.mlb:
+            _dict['mlb'] = self.mlb.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of playhousesquare
+        if self.playhousesquare:
+            _dict['playhousesquare'] = self.playhousesquare.to_dict()
         # set to None if ticketmaster (nullable) is None
         # and model_fields_set contains the field
         if self.ticketmaster is None and "ticketmaster" in self.model_fields_set:
@@ -95,6 +119,36 @@ class ScrapingTimingStatsSchema(BaseModel):
         if self.evenue is None and "evenue" in self.model_fields_set:
             _dict['evenue'] = None
 
+        # set to None if tickpick (nullable) is None
+        # and model_fields_set contains the field
+        if self.tickpick is None and "tickpick" in self.model_fields_set:
+            _dict['tickpick'] = None
+
+        # set to None if stubhub (nullable) is None
+        # and model_fields_set contains the field
+        if self.stubhub is None and "stubhub" in self.model_fields_set:
+            _dict['stubhub'] = None
+
+        # set to None if gotickets (nullable) is None
+        # and model_fields_set contains the field
+        if self.gotickets is None and "gotickets" in self.model_fields_set:
+            _dict['gotickets'] = None
+
+        # set to None if milb (nullable) is None
+        # and model_fields_set contains the field
+        if self.milb is None and "milb" in self.model_fields_set:
+            _dict['milb'] = None
+
+        # set to None if mlb (nullable) is None
+        # and model_fields_set contains the field
+        if self.mlb is None and "mlb" in self.model_fields_set:
+            _dict['mlb'] = None
+
+        # set to None if playhousesquare (nullable) is None
+        # and model_fields_set contains the field
+        if self.playhousesquare is None and "playhousesquare" in self.model_fields_set:
+            _dict['playhousesquare'] = None
+
         return _dict
 
     @classmethod
@@ -109,7 +163,13 @@ class ScrapingTimingStatsSchema(BaseModel):
         _obj = cls.model_validate({
             "ticketmaster": ScrapingTimingStatsSingleSchema.from_dict(obj["ticketmaster"]) if obj.get("ticketmaster") is not None else None,
             "vividseats": ScrapingTimingStatsSingleSchema.from_dict(obj["vividseats"]) if obj.get("vividseats") is not None else None,
-            "evenue": ScrapingTimingStatsSingleSchema.from_dict(obj["evenue"]) if obj.get("evenue") is not None else None
+            "evenue": ScrapingTimingStatsSingleSchema.from_dict(obj["evenue"]) if obj.get("evenue") is not None else None,
+            "tickpick": ScrapingTimingStatsSingleSchema.from_dict(obj["tickpick"]) if obj.get("tickpick") is not None else None,
+            "stubhub": ScrapingTimingStatsSingleSchema.from_dict(obj["stubhub"]) if obj.get("stubhub") is not None else None,
+            "gotickets": ScrapingTimingStatsSingleSchema.from_dict(obj["gotickets"]) if obj.get("gotickets") is not None else None,
+            "milb": ScrapingTimingStatsSingleSchema.from_dict(obj["milb"]) if obj.get("milb") is not None else None,
+            "mlb": ScrapingTimingStatsSingleSchema.from_dict(obj["mlb"]) if obj.get("mlb") is not None else None,
+            "playhousesquare": ScrapingTimingStatsSingleSchema.from_dict(obj["playhousesquare"]) if obj.get("playhousesquare") is not None else None
         })
         return _obj
 

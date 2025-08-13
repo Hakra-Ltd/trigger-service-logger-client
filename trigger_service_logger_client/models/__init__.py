@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 # import models into model package
 from trigger_service_logger_client.models.base_response_schema import BaseResponseSchema
 from trigger_service_logger_client.models.create_job_request_schema import CreateJobRequestSchema
@@ -50,3 +49,4 @@ from trigger_service_logger_client.models.scraping_vendor_stats_schema import Sc
 from trigger_service_logger_client.models.scraping_vendor_stats_single_schema import ScrapingVendorStatsSingleSchema
 from trigger_service_logger_client.models.validation_error import ValidationError
 from trigger_service_logger_client.models.validation_error_loc_inner import ValidationErrorLocInner
+

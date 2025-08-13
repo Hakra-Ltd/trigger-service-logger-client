@@ -18,30 +18,24 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class ScrapType(str, Enum):
+class EventExchange(str, Enum):
     """
-    ScrapType
+    EventExchange
     """
 
     """
     allowed enum values
     """
-    TICKETMASTER_MINUS_MAP = 'ticketmaster-map'
-    TICKETMASTER_MINUS_FACET = 'ticketmaster-facet'
-    VIVIDSEATS = 'vividseats'
-    EVENUE_MINUS_SEAT = 'evenue-seat'
-    EVENUE_MINUS_SECTION = 'evenue-section'
-    EVENUE_MINUS_PRICES = 'evenue-prices'
-    STUBHUB = 'stubhub'
-    TICKPICK = 'tickpick'
-    GOTICKETS = 'gotickets'
-    MILB = 'milb'
-    MLB = 'mlb'
-    PLAYHOUSESQUARE = 'playhousesquare'
+    VIAGOGO = 'Viagogo'
+    TICKETMASTER = 'Ticketmaster'
+    VIVIDSEATS = 'Vividseats'
+    SEATGEEK = 'Seatgeek'
+    PACIOLAN = 'Paciolan'
+    STUBHUB = 'StubHub'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of ScrapType from a JSON string"""
+        """Create an instance of EventExchange from a JSON string"""
         return cls(json.loads(json_str))
 
 
