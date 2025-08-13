@@ -17,21 +17,25 @@ import pprint
 import re  # noqa: F401
 import json
 
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from trigger_service_logger_client.models.scrap_type import ScrapType
 from typing import Optional, Set
 from typing_extensions import Self
 
-class JobRunMessage(BaseModel):
+class StatusChangedEventSchema(BaseModel):
     """
-    JobRunMessage
+    StatusChangedEventSchema
     """ # noqa: E501
-    job_run_id: StrictStr
     event_id: StrictStr
-    scrap_type: Optional[ScrapType]
-    run_config: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["job_run_id", "event_id", "scrap_type", "run_config"]
+    name: StrictStr
+    venue_name: Optional[StrictStr]
+    local_date: Optional[datetime]
+    url: Optional[StrictStr]
+    vividseats_url: Optional[StrictStr]
+    viagogo_url: Optional[StrictStr]
+    venue_id: StrictStr
+    __properties: ClassVar[List[str]] = ["event_id", "name", "venue_name", "local_date", "url", "vividseats_url", "viagogo_url", "venue_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +55,7 @@ class JobRunMessage(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of JobRunMessage from a JSON string"""
+        """Create an instance of StatusChangedEventSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,21 +76,36 @@ class JobRunMessage(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if scrap_type (nullable) is None
+        # set to None if venue_name (nullable) is None
         # and model_fields_set contains the field
-        if self.scrap_type is None and "scrap_type" in self.model_fields_set:
-            _dict['scrap_type'] = None
+        if self.venue_name is None and "venue_name" in self.model_fields_set:
+            _dict['venue_name'] = None
 
-        # set to None if run_config (nullable) is None
+        # set to None if local_date (nullable) is None
         # and model_fields_set contains the field
-        if self.run_config is None and "run_config" in self.model_fields_set:
-            _dict['run_config'] = None
+        if self.local_date is None and "local_date" in self.model_fields_set:
+            _dict['local_date'] = None
+
+        # set to None if url (nullable) is None
+        # and model_fields_set contains the field
+        if self.url is None and "url" in self.model_fields_set:
+            _dict['url'] = None
+
+        # set to None if vividseats_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.vividseats_url is None and "vividseats_url" in self.model_fields_set:
+            _dict['vividseats_url'] = None
+
+        # set to None if viagogo_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.viagogo_url is None and "viagogo_url" in self.model_fields_set:
+            _dict['viagogo_url'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of JobRunMessage from a dict"""
+        """Create an instance of StatusChangedEventSchema from a dict"""
         if obj is None:
             return None
 
@@ -94,10 +113,14 @@ class JobRunMessage(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "job_run_id": obj.get("job_run_id"),
             "event_id": obj.get("event_id"),
-            "scrap_type": obj.get("scrap_type"),
-            "run_config": obj.get("run_config")
+            "name": obj.get("name"),
+            "venue_name": obj.get("venue_name"),
+            "local_date": obj.get("local_date"),
+            "url": obj.get("url"),
+            "vividseats_url": obj.get("vividseats_url"),
+            "viagogo_url": obj.get("viagogo_url"),
+            "venue_id": obj.get("venue_id")
         })
         return _obj
 

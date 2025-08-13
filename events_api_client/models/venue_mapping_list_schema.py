@@ -17,21 +17,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from trigger_service_logger_client.models.scrap_type import ScrapType
+from pydantic import BaseModel, ConfigDict
+from typing import Any, ClassVar, Dict, List
+from events_api_client.models.venue_mapping_schema import VenueMappingSchema
 from typing import Optional, Set
 from typing_extensions import Self
 
-class JobRunMessage(BaseModel):
+class VenueMappingListSchema(BaseModel):
     """
-    JobRunMessage
+    VenueMappingListSchema
     """ # noqa: E501
-    job_run_id: StrictStr
-    event_id: StrictStr
-    scrap_type: Optional[ScrapType]
-    run_config: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["job_run_id", "event_id", "scrap_type", "run_config"]
+    venue_mappings: List[VenueMappingSchema]
+    __properties: ClassVar[List[str]] = ["venue_mappings"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +48,7 @@ class JobRunMessage(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of JobRunMessage from a JSON string"""
+        """Create an instance of VenueMappingListSchema from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,21 +69,18 @@ class JobRunMessage(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if scrap_type (nullable) is None
-        # and model_fields_set contains the field
-        if self.scrap_type is None and "scrap_type" in self.model_fields_set:
-            _dict['scrap_type'] = None
-
-        # set to None if run_config (nullable) is None
-        # and model_fields_set contains the field
-        if self.run_config is None and "run_config" in self.model_fields_set:
-            _dict['run_config'] = None
-
+        # override the default output from pydantic by calling `to_dict()` of each item in venue_mappings (list)
+        _items = []
+        if self.venue_mappings:
+            for _item_venue_mappings in self.venue_mappings:
+                if _item_venue_mappings:
+                    _items.append(_item_venue_mappings.to_dict())
+            _dict['venue_mappings'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of JobRunMessage from a dict"""
+        """Create an instance of VenueMappingListSchema from a dict"""
         if obj is None:
             return None
 
@@ -94,10 +88,7 @@ class JobRunMessage(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "job_run_id": obj.get("job_run_id"),
-            "event_id": obj.get("event_id"),
-            "scrap_type": obj.get("scrap_type"),
-            "run_config": obj.get("run_config")
+            "venue_mappings": [VenueMappingSchema.from_dict(_item) for _item in obj["venue_mappings"]] if obj.get("venue_mappings") is not None else None
         })
         return _obj
 

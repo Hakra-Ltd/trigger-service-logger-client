@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
+from pydantic import Field, StrictInt, StrictStr
 from typing import Any, Dict, List, Optional
 from typing_extensions import Annotated
 from trigger_service_logger_client.models.base_response_schema import BaseResponseSchema
@@ -1987,6 +1987,7 @@ class JobApi:
     async def get_log_info_v1_job_event_id_logs_get(
         self,
         event_id: StrictStr,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2005,6 +2006,8 @@ class JobApi:
 
         :param event_id: (required)
         :type event_id: str
+        :param limit:
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2029,6 +2032,7 @@ class JobApi:
 
         _param = self._get_log_info_v1_job_event_id_logs_get_serialize(
             event_id=event_id,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2054,6 +2058,7 @@ class JobApi:
     async def get_log_info_v1_job_event_id_logs_get_with_http_info(
         self,
         event_id: StrictStr,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2072,6 +2077,8 @@ class JobApi:
 
         :param event_id: (required)
         :type event_id: str
+        :param limit:
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2096,6 +2103,7 @@ class JobApi:
 
         _param = self._get_log_info_v1_job_event_id_logs_get_serialize(
             event_id=event_id,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2121,6 +2129,7 @@ class JobApi:
     async def get_log_info_v1_job_event_id_logs_get_without_preload_content(
         self,
         event_id: StrictStr,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2139,6 +2148,8 @@ class JobApi:
 
         :param event_id: (required)
         :type event_id: str
+        :param limit:
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2163,6 +2174,7 @@ class JobApi:
 
         _param = self._get_log_info_v1_job_event_id_logs_get_serialize(
             event_id=event_id,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2183,6 +2195,7 @@ class JobApi:
     def _get_log_info_v1_job_event_id_logs_get_serialize(
         self,
         event_id,
+        limit,
         _request_auth,
         _content_type,
         _headers,
@@ -2207,6 +2220,10 @@ class JobApi:
         if event_id is not None:
             _path_params['event_id'] = event_id
         # process the query parameters
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -2535,7 +2552,7 @@ class JobApi:
     async def set_job_data_process_notes_v1_job_job_id_data_process_notes_patch(
         self,
         job_id: StrictStr,
-        body: Dict[str, Any],
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2555,8 +2572,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param body: (required)
-        :type body: object
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2581,7 +2598,7 @@ class JobApi:
 
         _param = self._set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
             job_id=job_id,
-            body=body,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2607,7 +2624,7 @@ class JobApi:
     async def set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_with_http_info(
         self,
         job_id: StrictStr,
-        body: Dict[str, Any],
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2627,8 +2644,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param body: (required)
-        :type body: object
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2653,7 +2670,7 @@ class JobApi:
 
         _param = self._set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
             job_id=job_id,
-            body=body,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2679,7 +2696,7 @@ class JobApi:
     async def set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_without_preload_content(
         self,
         job_id: StrictStr,
-        body: Dict[str, Any],
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2699,8 +2716,8 @@ class JobApi:
 
         :param job_id: (required)
         :type job_id: str
-        :param body: (required)
-        :type body: object
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2725,7 +2742,7 @@ class JobApi:
 
         _param = self._set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
             job_id=job_id,
-            body=body,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2746,7 +2763,7 @@ class JobApi:
     def _set_job_data_process_notes_v1_job_job_id_data_process_notes_patch_serialize(
         self,
         job_id,
-        body,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -2774,8 +2791,8 @@ class JobApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body is not None:
-            _body_params = body
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`
