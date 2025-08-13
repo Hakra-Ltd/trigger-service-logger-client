@@ -29,7 +29,7 @@ class JobRunMessage(BaseModel):
     """ # noqa: E501
     job_run_id: StrictStr
     event_id: StrictStr
-    scrap_type: ScrapType
+    scrap_type: Optional[ScrapType]
     run_config: Optional[Dict[str, Any]] = None
     __properties: ClassVar[List[str]] = ["job_run_id", "event_id", "scrap_type", "run_config"]
 
@@ -72,6 +72,11 @@ class JobRunMessage(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if scrap_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.scrap_type is None and "scrap_type" in self.model_fields_set:
+            _dict['scrap_type'] = None
+
         # set to None if run_config (nullable) is None
         # and model_fields_set contains the field
         if self.run_config is None and "run_config" in self.model_fields_set:

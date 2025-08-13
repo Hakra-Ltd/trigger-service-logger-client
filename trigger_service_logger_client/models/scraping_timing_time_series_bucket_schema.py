@@ -19,7 +19,7 @@ import json
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from trigger_service_logger_client.models.scraping_timing_time_series_sample_schema import ScrapingTimingTimeSeriesSampleSchema
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,10 +29,12 @@ class ScrapingTimingTimeSeriesBucketSchema(BaseModel):
     ScrapingTimingTimeSeriesBucketSchema
     """ # noqa: E501
     time: datetime
-    ticketmaster: ScrapingTimingTimeSeriesSampleSchema
-    vividseats: ScrapingTimingTimeSeriesSampleSchema
-    evenue: ScrapingTimingTimeSeriesSampleSchema
-    __properties: ClassVar[List[str]] = ["time", "ticketmaster", "vividseats", "evenue"]
+    ticketmaster: Optional[ScrapingTimingTimeSeriesSampleSchema]
+    vividseats: Optional[ScrapingTimingTimeSeriesSampleSchema]
+    evenue: Optional[ScrapingTimingTimeSeriesSampleSchema]
+    tickpick: Optional[ScrapingTimingTimeSeriesSampleSchema]
+    stubhub: Optional[ScrapingTimingTimeSeriesSampleSchema]
+    __properties: ClassVar[List[str]] = ["time", "ticketmaster", "vividseats", "evenue", "tickpick", "stubhub"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -82,6 +84,37 @@ class ScrapingTimingTimeSeriesBucketSchema(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of evenue
         if self.evenue:
             _dict['evenue'] = self.evenue.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of tickpick
+        if self.tickpick:
+            _dict['tickpick'] = self.tickpick.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of stubhub
+        if self.stubhub:
+            _dict['stubhub'] = self.stubhub.to_dict()
+        # set to None if ticketmaster (nullable) is None
+        # and model_fields_set contains the field
+        if self.ticketmaster is None and "ticketmaster" in self.model_fields_set:
+            _dict['ticketmaster'] = None
+
+        # set to None if vividseats (nullable) is None
+        # and model_fields_set contains the field
+        if self.vividseats is None and "vividseats" in self.model_fields_set:
+            _dict['vividseats'] = None
+
+        # set to None if evenue (nullable) is None
+        # and model_fields_set contains the field
+        if self.evenue is None and "evenue" in self.model_fields_set:
+            _dict['evenue'] = None
+
+        # set to None if tickpick (nullable) is None
+        # and model_fields_set contains the field
+        if self.tickpick is None and "tickpick" in self.model_fields_set:
+            _dict['tickpick'] = None
+
+        # set to None if stubhub (nullable) is None
+        # and model_fields_set contains the field
+        if self.stubhub is None and "stubhub" in self.model_fields_set:
+            _dict['stubhub'] = None
+
         return _dict
 
     @classmethod
@@ -97,7 +130,9 @@ class ScrapingTimingTimeSeriesBucketSchema(BaseModel):
             "time": obj.get("time"),
             "ticketmaster": ScrapingTimingTimeSeriesSampleSchema.from_dict(obj["ticketmaster"]) if obj.get("ticketmaster") is not None else None,
             "vividseats": ScrapingTimingTimeSeriesSampleSchema.from_dict(obj["vividseats"]) if obj.get("vividseats") is not None else None,
-            "evenue": ScrapingTimingTimeSeriesSampleSchema.from_dict(obj["evenue"]) if obj.get("evenue") is not None else None
+            "evenue": ScrapingTimingTimeSeriesSampleSchema.from_dict(obj["evenue"]) if obj.get("evenue") is not None else None,
+            "tickpick": ScrapingTimingTimeSeriesSampleSchema.from_dict(obj["tickpick"]) if obj.get("tickpick") is not None else None,
+            "stubhub": ScrapingTimingTimeSeriesSampleSchema.from_dict(obj["stubhub"]) if obj.get("stubhub") is not None else None
         })
         return _obj
 
